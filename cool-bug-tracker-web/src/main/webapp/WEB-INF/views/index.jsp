@@ -1,33 +1,35 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8'/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 
     <link rel='stylesheet' href='script/libs/fullcalendar/lib/cupertino/jquery-ui.min.css'/>
-    <link href='script/libs/fullcalendar/fullcalendar.css' rel='stylesheet'/>
+    <link href='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.css' rel='stylesheet'/>
     <link href='script/libs/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print'/>
 
     <script src='script/libs/fullcalendar/lib/moment.min.js'></script>
-    <script src='script/libs/jquery/jquery-1.11.3.min.js'></script>
+    <script src='script/libs/jquery/jquery-1.11.3<c:out value="${min}"/>.js'></script>
     <script src='script/libs/fullcalendar/lib/jquery-ui.custom.min.js'></script>
-    <script src='script/libs/fullcalendar/fullcalendar.js'></script>
+    <script src='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.js'></script>
     <script src='script/libs/fullcalendar/lang-all.js'></script>
 
     <script src='script/libs/json/json2.js'></script>
-    <script src='script/libs/underscore/underscore.js'></script>
-    <script src='script/libs/backbone/backbone-1.2.1.min.js'></script>
-    <script src='script/libs/mustache/mustache.min.js'></script>
+    <script src='script/libs/underscore/underscore<c:out value="${min}"/>.js'></script>
+    <script src='script/libs/backbone/backbone-1.2.1<c:out value="${min}"/>.js'></script>
+    <script src='script/libs/mustache/mustache<c:out value="${min}"/>.js'></script>
     <script src='script/libs/icanhaz/ICanHaz.min.js'></script>
 
     <link rel="stylesheet" href="script/libs/chosen/docsupport/prism.css">
     <script src='script/libs/chosen/docsupport/prism.js'></script>
 
-    <link rel="stylesheet" href="script/libs/chosen/chosen.css">
-    <script src='script/libs/chosen/chosen.jquery.js'></script>
+    <link rel="stylesheet" href="script/libs/chosen/chosen<c:out value="${min}"/>.css">
+    <script src='script/libs/chosen/chosen.jquery<c:out value="${min}"/>.js'></script>
 
-    <script src='script/libs/jquerystorageapi/jquery.storageapi.min.js'></script>
+    <script src='script/libs/jquerystorageapi/jquery.storageapi<c:out value="${min}"/>.js'></script>
 
-    <script src='script/app/views/AppView.js'></script>
+    <script src='script/app/views/AppViews.js'></script>
     <script src='script/app/models/AppModels.js'></script>
     <script src='script/app/models/AppCollections.js'></script>
 
@@ -49,6 +51,12 @@
                 id="departments">
         </select>
 
+        <select data-placeholder="Select Products" multiple class="chosen-select sdf"
+                style="width:350px; display: none"
+                tabindex="18"
+                id="products">
+        </select>
+
     </div>
 
     <div id='left-panel-actions' class="left-panel left-panel-actions">
@@ -65,28 +73,39 @@
 
 <script>
     var app = {};
-    var Storages = {
-        departments : 'departments'
+    var storages = {
+        departments: 'departments'
+        , products: 'products'
     };
+    var StorageManager = {
+        get: function (storageName) {
+            if (!$.localStorage.get(storageName)) {
+                this.set(storageName, []);
+            }
+            return $.localStorage.get(storageName)
+        },
+
+        set: function (storageName, object) {
+            $.localStorage.set(storageName, object);
+        }
+    };
+
     $(document).ready(function () {
         // create namespace for our app
         app.Views = {};
         app.Models = {};
         app.Collections = {};
-        app.LocalStorage = $.localStorage;
 
         app.Views.CalendarView = CalendarView;
-        app.Views.FilterDepartmentView = FilterDepartmentView;
-        app.Views.LeftPanelActionsView = LeftPanelActionsView;
+        app.Views.DepartmentView = DepartmentView;
+        app.Views.ProductsView = ProductsView;
 
         app.Collections.Departments = Departments;
+        app.Collections.Products = Products;
 
         /*initilize*/
-        if (_.isEmpty(app.LocalStorage.get(Storages.departments))) {
-            app.LocalStorage.set(Storages.departments, []);
-        }
-
         new app.Collections.Departments();
+        new app.Collections.Products();
         new app.Views.CalendarView();
 
     });

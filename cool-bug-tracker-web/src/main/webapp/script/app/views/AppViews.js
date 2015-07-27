@@ -12,7 +12,6 @@ var TemplateManager = {
                 that.templates[id] = $tmpl;
                 callback($tmpl.html());
             });
-
         }
 
     }
@@ -49,13 +48,13 @@ var CalendarView = Backbone.View.extend({
     }
 });
 
-var FilterDepartmentView = Backbone.View.extend({
+var DepartmentView = Backbone.View.extend({
     el: '#departments'
     , template: 'options'
     , initialize: function (items) {
         var jsonItems = items.toJSON();
-        var selected = app.LocalStorage.get(Storages.departments);
-        _.each(selected, function(item) {
+        var selected = StorageManager.get(storages.departments);
+        _.each(selected, function (item) {
             var findWhere = _.findWhere(jsonItems, {id: parseInt(item.selected)});
             if (findWhere) {
                 findWhere.selected = true;
@@ -81,31 +80,63 @@ var FilterDepartmentView = Backbone.View.extend({
     , store: function (event, operation) {
         var selected = _.has(operation, "selected");
         var deselected = _.has(operation, "deselected");
-        var departments = app.LocalStorage.get(Storages.departments);
+        var departments = StorageManager.get(storages.departments);
         if (selected) {
             if (!_.findWhere(departments, operation)) {
                 departments.push(operation);
-                app.LocalStorage.set(Storages.departments, departments);
+                StorageManager.set(storages.departments, departments);
             }
         } else if (deselected) {
-            if (!_.findWhere(app.LocalStorage.get("departments"), operation)) {
-                departments = _.without(departments, _.findWhere(departments, {selected: operation.deselected}));
-                app.LocalStorage.set(Storages.departments, departments);
-            }
+            departments = _.without(departments, _.findWhere(departments, {selected: operation.deselected}));
+            StorageManager.set(storages.departments, departments);
         } else {
             throw Error('illegal chosen operation');
         }
     }
 });
 
-var LeftPanelActionsView = Backbone.View.extend({
-    el: '#left-panel-actions'
-    , initialize: function () {
+var ProductsView = DepartmentView.extend({
+    el: '#products'
+    , template: 'options'
+    , initialize: function (items) {
+        var jsonItems = items.toJSON();
+        var selected = StorageManager.get(storages.products);
+        _.each(selected, function (item) {
+            var findWhere = _.findWhere(jsonItems, {id: parseInt(item.selected)});
+            if (findWhere) {
+                findWhere.selected = true;
+            }
+        });
+        this.items = {'items': jsonItems};
         this.render();
     }
     , render: function () {
-        return this;
+        var self = this;
+        TemplateManager.get(this.template, function (template) {
+            self.view_template = _.template(template);
+            self.$el.append(self.view_template(self.items));
+            self.$el.show();
+            self.$el.chosen();
+            self.$el.on('change', self.store);
+        });
 
+        return this;
+    }
+    , store: function (event, operation) {
+        var selected = _.has(operation, "selected");
+        var deselected = _.has(operation, "deselected");
+        var products = StorageManager.get(storages.products);
+        if (selected) {
+            if (!_.findWhere(products, operation)) {
+                products.push(operation);
+                StorageManager.set(storages.products, products);
+            }
+        } else if (deselected) {
+            products = _.without(products, _.findWhere(products, {selected: operation.deselected}));
+            StorageManager.set(storages.products, products);
+        } else {
+            throw Error('illegal chosen operation');
+        }
     }
 });
 

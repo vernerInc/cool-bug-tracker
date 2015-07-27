@@ -23,7 +23,7 @@ public class AppInit implements WebApplicationInitializer {
 
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("cool-bt-servlet", new DispatcherServlet(context));
         dispatcher.setLoadOnStartup(1);
-        dispatcher.addMapping("/*");
+        dispatcher.addMapping("/");
     }
 
     private AnnotationConfigWebApplicationContext getContext() {

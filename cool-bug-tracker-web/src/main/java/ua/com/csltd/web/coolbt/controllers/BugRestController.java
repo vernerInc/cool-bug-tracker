@@ -1,11 +1,14 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import ua.com.csltd.server.dao.coolbtt.BaseCoolDAO;
 import ua.com.csltd.server.dao.coolbtt.models.bug.Bug;
 import ua.com.csltd.server.dao.coolbtt.models.department.Department;
+import ua.com.csltd.server.dao.coolbtt.models.products.Product;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestError;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestResult;
 
@@ -17,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping({"/bug"})
+@Transactional(value = "coolTransactionManager")
 public class BugRestController {
 
     @Autowired
@@ -24,6 +28,9 @@ public class BugRestController {
 
     @Autowired
     private BaseCoolDAO<Department> departmentCoolDAO;
+
+    @Autowired
+    private BaseCoolDAO<Product> productCoolDAO;
 
     /*Create of CRUD*/
     @ResponseStatus(HttpStatus.OK)
@@ -68,6 +75,23 @@ public class BugRestController {
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public List<Department> selectDepsList() {
         return departmentCoolDAO.findAll();
+    }
+
+    /*Read products list of CRUD*/
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/products/{departmentIds}", method = RequestMethod.GET)
+    public List selectProductsList(@PathVariable("departmentIds") List<Long> departmentIds) {
+        return productCoolDAO.getSession()
+                .createCriteria(Product.class)
+                .add(Restrictions.in("department.id", departmentIds))
+                .list();
+    }
+
+    /*Read products list of CRUD*/
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public List<Product> selectProductsList() {
+        return productCoolDAO.findAll();
     }
 
 }

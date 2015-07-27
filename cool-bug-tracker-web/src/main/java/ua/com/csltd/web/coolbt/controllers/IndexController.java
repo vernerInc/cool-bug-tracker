@@ -1,11 +1,11 @@
 package ua.com.csltd.web.coolbt.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import ua.com.csltd.server.dao.coolbtt.BaseCoolDAO;
-import ua.com.csltd.server.dao.coolbtt.models.department.Department;
 
 /**
  * @author : verner
@@ -16,10 +16,13 @@ import ua.com.csltd.server.dao.coolbtt.models.department.Department;
 public class IndexController {
 
     @Autowired
-    private BaseCoolDAO<Department> departmentCoolDAO;
+    private Environment env;
 
     @RequestMapping({"/", "/home"})
+    @ResponseBody
     public ModelAndView home() {
-        return new ModelAndView("index");
+        ModelAndView index = new ModelAndView("index");
+        index.addObject("min", "dev".equals(env.getProperty("cool.btt.profile")) ? "" : ".min");
+        return index;
     }
 }
