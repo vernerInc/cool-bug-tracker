@@ -44,7 +44,11 @@ var Products = Backbone.Collection.extend({
     }
 
     , fetchSuccess: function (collection, response) {
-        new app.Views.ProductsView(collection);
+        if (app.Inited.productView) {
+            app.Inited.productView.initialize(collection)
+        } else {
+            app.Inited.productView = new app.Views.ProductsView(collection);
+        }
     }
 
     , fetchError: function (collection, response) {

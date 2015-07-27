@@ -104,10 +104,12 @@
         app.Collections.Products = Products;
 
         /*initilize*/
-        new app.Collections.Departments();
-        new app.Collections.Products();
-        new app.Views.CalendarView();
-
+        app.Inited = {
+            departments: new app.Collections.Departments()
+            , products: new app.Collections.Products()
+            , calendar: new app.Views.CalendarView()
+            , productView : null
+        };
     });
 
 </script>

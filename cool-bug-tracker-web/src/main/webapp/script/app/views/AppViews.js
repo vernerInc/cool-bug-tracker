@@ -68,7 +68,7 @@ var DepartmentView = Backbone.View.extend({
 
         TemplateManager.get(this.template, function (template) {
             self.view_template = _.template(template);
-            self.$el.append(self.view_template(self.items));
+            self.$el.html(self.view_template(self.items));
             self.$el.show();
             self.$el.chosen();
             self.$el.on('change', self.store);
@@ -92,12 +92,15 @@ var DepartmentView = Backbone.View.extend({
         } else {
             throw Error('illegal chosen operation');
         }
+
+        app.Inited.products.initialize()
     }
 });
 
-var ProductsView = DepartmentView.extend({
+var ProductsView = Backbone.View.extend({
     el: '#products'
     , template: 'options'
+    , isChosenReady: false
     , initialize: function (items) {
         var jsonItems = items.toJSON();
         var selected = StorageManager.get(storages.products);
@@ -114,10 +117,15 @@ var ProductsView = DepartmentView.extend({
         var self = this;
         TemplateManager.get(this.template, function (template) {
             self.view_template = _.template(template);
-            self.$el.append(self.view_template(self.items));
-            self.$el.show();
-            self.$el.chosen();
-            self.$el.on('change', self.store);
+                self.$el.html(self.view_template(self.items));
+            if (!self.isChosenReady) {
+                self.$el.show();
+                self.isChosenReady = true;
+                self.$el.on('change', self.store);
+                self.$el.chosen();
+            } else{
+                self.$el.trigger("chosen:updated")
+            }
         });
 
         return this;
