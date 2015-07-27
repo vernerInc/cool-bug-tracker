@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'/>
+
+    <link rel='stylesheet' href='script/libs/fullcalendar/lib/cupertino/jquery-ui.min.css'/>
+    <link href='script/libs/fullcalendar/fullcalendar.css' rel='stylesheet'/>
+    <link href='script/libs/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print'/>
+
+    <script src='script/libs/fullcalendar/lib/moment.min.js'></script>
+    <script src='script/libs/jquery/jquery-1.11.3.min.js'></script>
+    <script src='script/libs/fullcalendar/lib/jquery-ui.custom.min.js'></script>
+    <script src='script/libs/fullcalendar/fullcalendar.js'></script>
+    <script src='script/libs/fullcalendar/lang-all.js'></script>
+
+    <script src='script/libs/json/json2.js'></script>
+    <script src='script/libs/underscore/underscore.js'></script>
+    <script src='script/libs/backbone/backbone-1.2.1.min.js'></script>
+    <script src='script/libs/mustache/mustache.min.js'></script>
+    <script src='script/libs/icanhaz/ICanHaz.min.js'></script>
+
+    <link rel="stylesheet" href="script/libs/chosen/docsupport/prism.css">
+    <script src='script/libs/chosen/docsupport/prism.js'></script>
+
+    <link rel="stylesheet" href="script/libs/chosen/chosen.css">
+    <script src='script/libs/chosen/chosen.jquery.js'></script>
+
+    <script src='script/libs/jquerystorageapi/jquery.storageapi.min.js'></script>
+
+    <script src='script/app/views/AppView.js'></script>
+    <script src='script/app/models/AppModels.js'></script>
+    <script src='script/app/models/AppCollections.js'></script>
+
+    <link href='css/main-app.css' rel='stylesheet'/>
+
+</head>
+<body>
+
+<div id='wrap'>
+
+    <div id='calendar'></div>
+
+    <div id='left-panel-filters' class="left-panel">
+        <h4>Filters</h4>
+
+        <select data-placeholder="Select Department" multiple class="chosen-select sdf"
+                style="width:350px; display: none"
+                tabindex="18"
+                id="departments">
+        </select>
+
+    </div>
+
+    <div id='left-panel-actions' class="left-panel left-panel-actions">
+        <h4>Actions</h4>
+
+        <div class='fc-event choose-filter'>Find by BTT number</div>
+    </div>
+
+    <div style='clear:both'></div>
+
+</div>
+
+</body>
+
+<script>
+    var app = {};
+    var Storages = {
+        departments : 'departments'
+    };
+    $(document).ready(function () {
+        // create namespace for our app
+        app.Views = {};
+        app.Models = {};
+        app.Collections = {};
+        app.LocalStorage = $.localStorage;
+
+        app.Views.CalendarView = CalendarView;
+        app.Views.FilterDepartmentView = FilterDepartmentView;
+        app.Views.LeftPanelActionsView = LeftPanelActionsView;
+
+        app.Collections.Departments = Departments;
+
+        /*initilize*/
+        if (_.isEmpty(app.LocalStorage.get(Storages.departments))) {
+            app.LocalStorage.set(Storages.departments, []);
+        }
+
+        new app.Collections.Departments();
+        new app.Views.CalendarView();
+
+    });
+
+</script>
+</html>
