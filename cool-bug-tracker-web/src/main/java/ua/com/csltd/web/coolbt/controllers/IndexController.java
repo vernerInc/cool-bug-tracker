@@ -1,9 +1,11 @@
 package ua.com.csltd.web.coolbt.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,6 +23,7 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping({"/"})
+@Transactional(value = "badTransactionManager")
 public class IndexController {
 
     @Autowired
@@ -42,7 +45,13 @@ public class IndexController {
         index.addObject("min", "dev".equals(env.getProperty("cool.btt.profile")) ? "" : ".min");
         try {
             index.addObject("departments", json.objectToString(departmentCoolDAO.findAll()));
-            index.addObject("users", json.objectToString(userBadDAO.findAll()));
+            index.addObject("users", json.objectToString(userBadDAO.getSession()
+                            .createCriteria(User.class)
+                            .add(Restrictions.eq("isDeleted", false))
+                            .add(Restrictions.eq("showAll", true))
+                            .addOrder(Order.asc("login"))
+                            .list()
+            ));
         } catch (IOException e) {
             e.printStackTrace();
         }
