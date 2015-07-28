@@ -115,15 +115,21 @@
         /*initilize*/
         app.Inited = {};
 
+        /*Init departments*/
         app.Inited.departments = new app.Collections.Departments();
         app.Inited.departments.reset(<c:out value="${departments}" escapeXml="false"/>);
         new app.Views.DepartmentView(app.Inited.departments);
 
+        /*Init products*/
         app.Inited.products = new app.Collections.Products();
 
+        /*Init user*/
         app.Inited.users = new app.Collections.Users();
         app.Inited.users.reset(<c:out value="${users}" escapeXml="false"/>);
         new app.Views.UsersView(app.Inited.users);
+
+        /*Init calendar*/
+        app.Inited.calendar = new app.Views.CalendarView();
 
     });
 
