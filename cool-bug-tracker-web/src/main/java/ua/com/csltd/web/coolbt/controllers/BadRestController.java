@@ -1,5 +1,6 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class BadRestController {
                 .createCriteria(User.class)
                 .add(Restrictions.eq("isDeleted", false))
                 .add(Restrictions.eq("showAll", true))
+                .addOrder(Order.asc("login"))
                 .list()
                 ;
     }

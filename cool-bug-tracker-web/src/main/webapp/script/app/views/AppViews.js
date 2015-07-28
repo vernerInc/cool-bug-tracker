@@ -72,7 +72,7 @@ var DepartmentView = Backbone.View.extend({
             self.$el.html(self.view_template(self.items));
             if (!self.isChosenReady) {
                 self.$el.show();
-                self.$el.chosen();
+                self.$el.chosen({max_selected_options: 8});
                 self.$el.on('change', self.store);
                 self.isChosenReady = true;
             } else {
@@ -127,7 +127,7 @@ var ProductsView = Backbone.View.extend({
             if (!self.isChosenReady) {
                 self.$el.show();
                 self.$el.on('change', self.store);
-                self.$el.chosen();
+                self.$el.chosen({max_selected_options: 8});
                 self.isChosenReady = true;
             } else {
                 self.$el.trigger("chosen:updated")
@@ -180,7 +180,7 @@ var UsersView = Backbone.View.extend({
                 self.$el.show();
                 self.isChosenReady = true;
                 self.$el.on('change', self.store);
-                self.$el.chosen();
+                self.$el.chosen({max_selected_options: 8});
             } else {
                 self.$el.trigger("chosen:updated")
             }

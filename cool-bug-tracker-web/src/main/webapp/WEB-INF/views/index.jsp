@@ -45,19 +45,19 @@
     <div id='left-panel-filters' class="left-panel">
         <h4>Filters</h4>
 
-        <select data-placeholder="Select Department" multiple class="chosen-select sdf"
+        <select data-placeholder="Select Department" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="departments">
         </select>
 
-        <select data-placeholder="Select Products" multiple class="chosen-select sdf"
+        <select data-placeholder="Select Products" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="products">
         </select>
 
-        <select data-placeholder="Select User" multiple class="chosen-select sdf"
+        <select data-placeholder="Select User" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="users">
