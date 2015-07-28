@@ -1,5 +1,6 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,7 +84,7 @@ public class BugRestController {
     public List selectProductsList(@PathVariable("departmentIds") List<Long> departmentIds) {
         return productCoolDAO.getSession()
                 .createCriteria(Product.class)
-                .add(Restrictions.in("department.id", departmentIds))
+                .add(Restrictions.in("department.id", departmentIds)).addOrder(Order.asc("id"))
                 .list();
     }
 
