@@ -37,13 +37,8 @@ var BugModel = Backbone.Model.extend({
         });
     }
     , constructor: function (attributes, options) {
-        console.log('Bug\'s constructor had been called');
-        Backbone.Model.apply(this, arguments);
     }
     , validate: function (attr) {
-        if (!attr.bttBugNo) {
-            return "Invalid bttBugNo supplied."
-        }
     }
     , urlRoot: 'bug'
 });
@@ -63,19 +58,8 @@ var User = Backbone.Model.extend({
     }
     , idAttribute: "id"
     , initialize: function () {
-        console.log('bug has been initialized');
-        this.on("invalid", function (model, error) {
-            console.log("Houston, we have a problem: " + error)
-        });
-    }
-    , constructor: function (attributes, options) {
-        console.log('Bug\'s constructor had been called');
-        Backbone.Model.apply(this, arguments);
     }
     , validate: function (attr) {
-        if (!attr.bttBugNo) {
-            return "Invalid bttBugNo supplied."
-        }
     }
     , urlRoot: 'ext/user'
 });

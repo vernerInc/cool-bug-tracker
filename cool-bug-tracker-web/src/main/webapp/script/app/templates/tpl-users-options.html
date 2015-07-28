@@ -1,5 +1,5 @@
 <script id="tpl-options" type="text/html">
 <% _.each(items, function(item) { %>
-<option <% if(item.selected){%>selected<%}%> value="<%=item.id%>"><%=item.login%>(<%=item.firstName%> <%=item.lastName%>)</option>
+<option <% if(item.selected){%>selected<%}%> value="<%=item.id%>"><%=item.login%> - <%=item.firstName%> <%=item.lastName%></option>
 <% }); %>
 </script>
