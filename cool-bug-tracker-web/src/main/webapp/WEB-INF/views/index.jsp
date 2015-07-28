@@ -113,13 +113,18 @@
         app.Collections.Users = Users;
 
         /*initilize*/
-        app.Inited = {
-            departments: new app.Collections.Departments()
-            , products: new app.Collections.Products()
-            , users: new app.Collections.Users()
-            , calendar: new app.Views.CalendarView()
-            , productView: null
-        };
+        app.Inited = {};
+
+        app.Inited.departments = new app.Collections.Departments();
+        app.Inited.departments.reset(<c:out value="${departments}" escapeXml="false"/>);
+        new app.Views.DepartmentView(app.Inited.departments);
+
+        app.Inited.products = new app.Collections.Products();
+
+        app.Inited.users = new app.Collections.Users();
+        app.Inited.users.reset(<c:out value="${users}" escapeXml="false"/>);
+        new app.Views.UsersView(app.Inited.users);
+
     });
 
 </script>

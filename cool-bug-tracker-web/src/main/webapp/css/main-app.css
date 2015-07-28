@@ -58,13 +58,16 @@ body {
 
 #departments_chosen {
     margin-bottom: 20px;
+    text-align: left;
 }
 
 #products_chosen {
     margin-bottom: 20px;
+    text-align: left;
 }
 
 #users_chosen {
     margin-bottom: 20px;
+    text-align: left;
 }
 

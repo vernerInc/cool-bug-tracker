@@ -1,21 +1,7 @@
 var Departments = Backbone.Collection.extend({
     model: DepartmentModel
-    , url: 'bug/departments'
     , initialize: function () {
-        this.fetch({
-            success: this.fetchSuccess
-            , error: this.fetchError
-        });
-
         return this;
-    }
-
-    , fetchSuccess: function (collection, response) {
-        new app.Views.DepartmentView(collection);
-    }
-
-    , fetchError: function (collection, response) {
-        alert(response);
     }
 });
 
@@ -58,21 +44,7 @@ var Products = Backbone.Collection.extend({
 
 var Users = Backbone.Collection.extend({
     model: User
-    , url: 'ext/users'
     , initialize: function () {
-        this.fetch({
-            success: this.fetchSuccess
-            , error: this.fetchError
-        });
-
         return this;
-    }
-
-    , fetchSuccess: function (collection, response) {
-        new app.Views.UsersView(collection);
-    }
-
-    , fetchError: function (collection, response) {
-        alert(response);
     }
 });
