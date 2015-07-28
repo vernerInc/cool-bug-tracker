@@ -1,5 +1,6 @@
 package ua.com.csltd.server.dao.badbtt.models.badbug;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.priority.Priority;
 import ua.com.csltd.server.dao.badbtt.models.productversion.ProductVersion;
@@ -29,10 +30,12 @@ public class BadBug extends BaseEntity<Long> {
     @Column(name = "ID_BUG_TYPE")
     public Long bugTypeId;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_STATUS", referencedColumnName = "ID")
     private Status status;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRIORITY", referencedColumnName = "ID")
     private Priority priority;
@@ -49,18 +52,22 @@ public class BadBug extends BaseEntity<Long> {
     @Column(name = "DEADLINE")
     private String deadLine;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_SUBSYSTEM", referencedColumnName = "ID")
     private SubSystem system;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_IMPLVERSION", referencedColumnName = "ID")
     private ProductVersion productVersion;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PROJECT", referencedColumnName = "ID")
     private BadBug project;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PARENT", referencedColumnName = "ID")
     private BadBug parent;

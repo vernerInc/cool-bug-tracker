@@ -1,5 +1,6 @@
 package ua.com.csltd.server.dao.badbtt.models.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
 
@@ -28,6 +29,7 @@ public class BadProduct extends BaseEntity<Long> {
     @Column(name = "EMAIL")
     private String email;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_MANAGER", referencedColumnName = "ID")
     private User manager;

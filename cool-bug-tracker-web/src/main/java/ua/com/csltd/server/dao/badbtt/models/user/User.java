@@ -1,5 +1,7 @@
 package ua.com.csltd.server.dao.badbtt.models.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.department.BadDepartment;
 
@@ -26,6 +28,7 @@ public class User extends BaseEntity<Long> {
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_boss", referencedColumnName = "ID")
     private User boss;
@@ -33,9 +36,18 @@ public class User extends BaseEntity<Long> {
     @Column(name = "CREATINGTIME")
     private Timestamp creatingTime;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DEPARTMENT", referencedColumnName = "ID")
     private BadDepartment department;
+
+    @Column(name = "SHOWALL")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean showAll;
+
+    @Column(name = "ISDELETED")
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean isDeleted;
 
     public String getLogin() {
         return login;
@@ -91,5 +103,21 @@ public class User extends BaseEntity<Long> {
 
     public void setDepartment(BadDepartment department) {
         this.department = department;
+    }
+
+    public boolean isShowAll() {
+        return showAll;
+    }
+
+    public void setShowAll(boolean showAll) {
+        this.showAll = showAll;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }

@@ -1,5 +1,6 @@
 package ua.com.csltd.server.dao.coolbtt.models.products;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.coolbtt.models.department.Department;
 
@@ -20,7 +21,8 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "ID")
     private Department department;
 

@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping({"/bug"})
 @Transactional(value = "coolTransactionManager")
-public class BugRestController {
+public class CoolRestController {
 
     @Autowired
     private BaseCoolDAO<Bug> bugCoolDAO;
@@ -80,19 +80,19 @@ public class BugRestController {
 
     /*Read products list of CRUD*/
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "/products/{departmentIds}", method = RequestMethod.GET)
-    public List selectProductsList(@PathVariable("departmentIds") List<Long> departmentIds) {
-        return productCoolDAO.getSession()
-                .createCriteria(Product.class)
-                .add(Restrictions.in("department.id", departmentIds)).addOrder(Order.asc("id"))
-                .list();
-    }
-
-    /*Read products list of CRUD*/
-    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public List<Product> selectProductsList() {
         return productCoolDAO.findAll();
     }
 
+    /*Read products list of CRUD*/
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/products/{departmentIds}", method = RequestMethod.GET)
+    @SuppressWarnings("unchecked")
+    public List<Product> selectProductsList(@PathVariable("departmentIds") List<Long> departmentIds) {
+        return productCoolDAO.getSession()
+                .createCriteria(Product.class)
+                .add(Restrictions.in("department.id", departmentIds)).addOrder(Order.asc("id"))
+                .list();
+    }
 }

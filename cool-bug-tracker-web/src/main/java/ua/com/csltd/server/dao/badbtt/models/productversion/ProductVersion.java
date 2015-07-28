@@ -1,5 +1,7 @@
 package ua.com.csltd.server.dao.badbtt.models.productversion;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.product.BadProduct;
 
@@ -25,11 +27,13 @@ public class ProductVersion extends BaseEntity<Long> {
     private Timestamp releaseDate;
 
     @Column(name = "ISDELETED")
-    private Integer isDeleted;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean isDeleted;
 
     @Column(name = "ORDERNO")
     private Integer orderNo;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PARENT", referencedColumnName = "ID")
     private ProductVersion parentVersion;
@@ -58,11 +62,11 @@ public class ProductVersion extends BaseEntity<Long> {
         this.releaseDate = releaseDate;
     }
 
-    public Integer getIsDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

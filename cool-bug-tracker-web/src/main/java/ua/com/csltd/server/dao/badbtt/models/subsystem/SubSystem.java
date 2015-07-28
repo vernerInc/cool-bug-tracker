@@ -1,5 +1,7 @@
 package ua.com.csltd.server.dao.badbtt.models.subsystem;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Type;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.product.BadProduct;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
@@ -28,8 +30,10 @@ public class SubSystem extends BaseEntity<Integer> {
     private String shortName;
 
     @Column(name = "ISDELETED")
-    private Integer isDeleted;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    private boolean isDeleted;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_RESPONSIBLE", referencedColumnName = "ID")
     private User resposibleUser;
@@ -69,11 +73,11 @@ public class SubSystem extends BaseEntity<Integer> {
         this.shortName = shortName;
     }
 
-    public Integer getIsDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 

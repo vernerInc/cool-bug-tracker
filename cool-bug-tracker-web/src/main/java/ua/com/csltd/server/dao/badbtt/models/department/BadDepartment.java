@@ -1,5 +1,6 @@
 package ua.com.csltd.server.dao.badbtt.models.department;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.csltd.common.models.BaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
 
@@ -19,6 +20,7 @@ public class BadDepartment extends BaseEntity<Long> {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_DEPARTLEADER", referencedColumnName = "ID")
     private User leader;

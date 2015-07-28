@@ -20,7 +20,7 @@ public class Bug extends BaseEntity<Long> {
     @Column(name = "BTT_BUG_NO")
     public Long bttBugNo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
     private Product product;
 
@@ -32,6 +32,12 @@ public class Bug extends BaseEntity<Long> {
 
     @Column(name = "IS_DELETED")
     public Integer isDeleted;
+
+    @Column(name = "BTT_USER_RESPONSIBLE_ID")
+    public Long userId;
+
+    @Column(name = "BTT_USER_LOGIN")
+    public String login;
 
     public Long getBttBugId() {
         return bttBugId;
@@ -79,5 +85,21 @@ public class Bug extends BaseEntity<Long> {
 
     public void setIsDeleted(Integer isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

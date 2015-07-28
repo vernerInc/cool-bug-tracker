@@ -78,7 +78,7 @@ public class BadBttConfig {
     }
 
     @Bean
-    public BaseBadDAO<User> userBaseDAO() {
+    public BaseBadDAO<User> userBadDAO() {
         return new BaseBadDAO<>(User.class);
     }
 

@@ -55,3 +55,24 @@ var Products = Backbone.Collection.extend({
         alert(response);
     }
 });
+
+var Users = Backbone.Collection.extend({
+    model: User
+    , url: 'ext/users'
+    , initialize: function () {
+        this.fetch({
+            success: this.fetchSuccess
+            , error: this.fetchError
+        });
+
+        return this;
+    }
+
+    , fetchSuccess: function (collection, response) {
+        new app.Views.UsersView(collection);
+    }
+
+    , fetchError: function (collection, response) {
+        alert(response);
+    }
+});

@@ -20,7 +20,7 @@ public class BaseBadDAO<T extends BaseEntity> {
 
     private Class<T> persistentClass;
 
-    protected Session getSession() {
+    public Session getSession() {
         return entityManager.unwrap(Session.class);
     }
 

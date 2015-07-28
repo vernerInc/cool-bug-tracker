@@ -57,6 +57,12 @@
                 id="products">
         </select>
 
+        <select data-placeholder="Select User" multiple class="chosen-select sdf"
+                style="width:350px; display: none"
+                tabindex="18"
+                id="users">
+        </select>
+
     </div>
 
     <div id='left-panel-actions' class="left-panel left-panel-actions">
@@ -76,6 +82,7 @@
     var storages = {
         departments: 'departments'
         , products: 'products'
+        , users: 'users'
     };
     var StorageManager = {
         get: function (storageName) {
@@ -99,16 +106,19 @@
         app.Views.CalendarView = CalendarView;
         app.Views.DepartmentView = DepartmentView;
         app.Views.ProductsView = ProductsView;
+        app.Views.UsersView = UsersView;
 
         app.Collections.Departments = Departments;
         app.Collections.Products = Products;
+        app.Collections.Users = Users;
 
         /*initilize*/
         app.Inited = {
             departments: new app.Collections.Departments()
             , products: new app.Collections.Products()
+            , users: new app.Collections.Users()
             , calendar: new app.Views.CalendarView()
-            , productView : null
+            , productView: null
         };
     });
 
