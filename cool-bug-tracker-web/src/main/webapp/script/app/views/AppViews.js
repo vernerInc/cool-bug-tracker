@@ -230,6 +230,8 @@ var UsersView = Backbone.View.extend({
         } else {
             throw Error('illegal chosen operation');
         }
+        app.Inited.calendar.reFetchEvents();
+
     }
     , getSelected: function () {
         return this.$el.chosen().val() ? this.$el.chosen().val().toString() : '';
