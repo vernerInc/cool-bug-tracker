@@ -1,10 +1,14 @@
 package ua.com.csltd.server.dao.coolbtt.models.bug;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.hibernate.annotations.Type;
 import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.utils.CustomDateSerializer;
 import ua.com.csltd.server.dao.coolbtt.models.products.Product;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author : verner
@@ -20,24 +24,33 @@ public class Bug extends BaseEntity<Long> {
     @Column(name = "BTT_BUG_NO")
     public Long bttBugNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
     private Product product;
 
+
     @Column(name = "START_DATE")
-    public Timestamp startDate;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date start;
 
     @Column(name = "END_DATE")
-    public Timestamp endDate;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date end;
 
+    @JsonIgnore
     @Column(name = "IS_DELETED")
-    public Integer isDeleted;
+    @Type(type = "org.hibernate.type.NumericBooleanType")
+    public boolean isDeleted;
 
     @Column(name = "BTT_USER_RESPONSIBLE_ID")
     public Long userId;
 
     @Column(name = "BTT_USER_LOGIN")
     public String login;
+
+    @Column(name = "DESCRIPTION")
+    public String description;
 
     public Long getBttBugId() {
         return bttBugId;
@@ -63,27 +76,27 @@ public class Bug extends BaseEntity<Long> {
         this.product = product;
     }
 
-    public Timestamp getStartDate() {
-        return startDate;
+    public Date getStart() {
+        return start;
     }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
+    public void setStart(Date start) {
+        this.start = start;
     }
 
-    public Timestamp getEndDate() {
-        return endDate;
+    public Date getEnd() {
+        return end;
     }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
+    public void setEnd(Date end) {
+        this.end = end;
     }
 
-    public Integer getIsDeleted() {
+    public boolean isDeleted() {
         return isDeleted;
     }
 
-    public void setIsDeleted(Integer isDeleted) {
+    public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
 
@@ -101,5 +114,17 @@ public class Bug extends BaseEntity<Long> {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return product.getName() + " " + bttBugNo.toString() + " - " + description;
     }
 }

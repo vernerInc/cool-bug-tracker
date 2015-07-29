@@ -5,9 +5,9 @@ import ua.com.csltd.common.models.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : verner
@@ -69,5 +69,16 @@ public class BaseBadDAO<T extends BaseEntity> {
 
     private void doDelete(final T entity) {
         entityManager.remove(entity);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> listBySql(String sql, Map<String, Object> params) {
+        Query query = entityManager.createQuery(sql);
+
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
     }
 }

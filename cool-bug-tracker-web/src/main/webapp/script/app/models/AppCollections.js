@@ -8,14 +8,14 @@ var Departments = Backbone.Collection.extend({
 var Products = Backbone.Collection.extend({
     model: ProductModel
     , url: function () {
-        var url = 'bug/products';
+        var url = 'products';
         var selectedDepartments = StorageManager.get(storages.departments);
         if (selectedDepartments) {
             var depsIds = [];
             _.each(selectedDepartments, function (item) {
                 depsIds.push(item.selected);
             });
-            return 'bug/products/' + depsIds
+            return url + '/' + depsIds
         } else {
             return url;
         }

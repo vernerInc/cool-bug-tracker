@@ -71,3 +71,6 @@ body {
     text-align: left;
 }
 
+span.fc-time {
+    display: none;
+}

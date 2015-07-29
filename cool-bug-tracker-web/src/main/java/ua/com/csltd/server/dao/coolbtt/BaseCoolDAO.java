@@ -1,12 +1,13 @@
 package ua.com.csltd.server.dao.coolbtt;
 
 import org.hibernate.Session;
-import org.springframework.transaction.annotation.Transactional;
 import ua.com.csltd.common.models.BaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : verner
@@ -68,5 +69,16 @@ public class BaseCoolDAO<T extends BaseEntity> {
 
     private void doDelete(final T entity) {
         entityManager.remove(entity);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> listBySql(String sql, Map<String, Object> params) {
+        Query query = entityManager.createQuery(sql);
+
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            query.setParameter(entry.getKey(), entry.getValue());
+        }
+
+        return query.getResultList();
     }
 }

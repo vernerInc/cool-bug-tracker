@@ -42,10 +42,36 @@ var CalendarView = Backbone.View.extend({
             , droppable: true
             , drop: function () {
             }
+            , eventSources: [
+                {
+                    url: 'bug',
+                    type: 'get',
+                    data: {
+                        userIds: 1481
+                        , departmentIds: 1
+                        , productIds: 2
+                    },
+                    error: function () {
+                        alert('there was an error while fetching events!');
+                    }
+                }
+            ]
+
+            , nextDayThreshold: "23:59:59"
         });
 
         return this;
     }
+
+    , getCurrentViewDates: function () {
+        var view = this.$el.fullCalendar('getView');
+        return {
+            'start': view.intervalStart.format()
+            , 'end': view.intervalEnd.format()
+        };
+    }
+
+
 });
 
 var DepartmentView = Backbone.View.extend({

@@ -7,6 +7,8 @@ package ua.com.csltd.web.coolbt.controllers.exceptions;
 public enum RestError {
     SERVER_ERROR(-1, "Server error occured")
     , SUCCESS(0, "SUCCESS")
+    , START_DATE_IS_NULL(100, "Start date can't be null")
+    , END_DATE_IS_NULL(101, "End date can't be null")
     ;
 
     public final int code;
