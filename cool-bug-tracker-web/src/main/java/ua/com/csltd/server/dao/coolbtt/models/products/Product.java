@@ -21,8 +21,7 @@ public class Product extends BaseEntity<Long> {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DEPARTMENT_ID", referencedColumnName = "ID")
     private Department department;
 

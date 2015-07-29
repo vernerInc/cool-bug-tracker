@@ -1,11 +1,11 @@
-var Departments = Backbone.Collection.extend({
+var DepartmentsCollection = Backbone.Collection.extend({
     model: DepartmentModel
     , initialize: function () {
         return this;
     }
 });
 
-var Products = Backbone.Collection.extend({
+var ProductsCollection = Backbone.Collection.extend({
     model: ProductModel
     , url: function () {
         var url = 'products';
@@ -42,7 +42,7 @@ var Products = Backbone.Collection.extend({
     }
 });
 
-var Users = Backbone.Collection.extend({
+var UsersCollection = Backbone.Collection.extend({
     model: User
     , initialize: function () {
         return this;

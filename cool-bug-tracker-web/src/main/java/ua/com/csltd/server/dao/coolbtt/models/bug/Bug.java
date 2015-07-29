@@ -24,7 +24,6 @@ public class Bug extends BaseEntity<Long> {
     @Column(name = "BTT_BUG_NO")
     public Long bttBugNo;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
     private Product product;
@@ -124,7 +123,4 @@ public class Bug extends BaseEntity<Long> {
         this.description = description;
     }
 
-    public String getTitle() {
-        return product.getName() + " " + bttBugNo.toString() + " - " + description;
-    }
 }

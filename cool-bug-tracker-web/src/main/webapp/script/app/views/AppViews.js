@@ -1,23 +1,3 @@
-var TemplateManager = {
-    templates: {},
-
-    get: function (id, callback) {
-        var template = this.templates[id];
-        if (template) {
-            callback(template.html());
-        } else {
-            var that = this;
-            $.get("script/app/templates/tpl-" + id + ".html").then(function (template) {
-                var $tmpl = $(template);
-                that.templates[id] = $tmpl;
-                callback($tmpl.html());
-            });
-        }
-
-    }
-
-};
-
 var CalendarView = Backbone.View.extend({
     el: '#calendar',
     initialize: function () {
@@ -46,16 +26,26 @@ var CalendarView = Backbone.View.extend({
                 {
                     url: 'bug',
                     type: 'get',
-                    data: {
-                        userIds: 1481
-                        , departmentIds: 1
-                        , productIds: 2
+                    data: function () {
+                        return {
+                            userIds: app.Inited.userView.getSelected()
+                            , departmentIds: app.Inited.departmentView.getSelected()
+                            , productIds: app.Inited.productView.getSelected()
+                        }
                     },
                     error: function () {
                         alert('there was an error while fetching events!');
                     }
                 }
             ]
+            , eventRender: function (event, element) {
+                element.find('.fc-title').append(
+                    event.product.department.name + ' ' +
+                    event.product.name + ' ' +
+                    event.bttBugNo + ' - ' +
+                    event.description + '<br/>' +
+                    'Responsible user: ' + event.login);
+            }
 
             , nextDayThreshold: "23:59:59"
         });
@@ -70,15 +60,16 @@ var CalendarView = Backbone.View.extend({
             , 'end': view.intervalEnd.format()
         };
     }
-
-
+    , reFetchEvents: function () {
+        this.$el.fullCalendar('refetchEvents');
+    }
 });
 
 var DepartmentView = Backbone.View.extend({
     el: '#departments'
     , isChosenReady: false
     , template: 'options'
-    , initialize: function (items) {
+    , initialize: function (items/*, initProductsCallBack, initUsersCallBack, initCalendarCallBack*/) {
         var jsonItems = items.toJSON();
         var selected = StorageManager.get(storages.departments);
         _.each(selected, function (item) {
@@ -101,10 +92,10 @@ var DepartmentView = Backbone.View.extend({
                 self.$el.chosen({max_selected_options: 8});
                 self.$el.on('change', self.store);
                 self.isChosenReady = true;
+                initProductsCallBack();
             } else {
                 self.$el.trigger("chosen:updated")
             }
-
         });
 
         return this;
@@ -125,7 +116,11 @@ var DepartmentView = Backbone.View.extend({
             throw Error('illegal chosen operation');
         }
 
-        app.Inited.products.initialize()
+        app.Inited.products.initialize();
+        app.Inited.calendar.reFetchEvents();
+    }
+    , getSelected: function () {
+        return this.$el.chosen().val() ? this.$el.chosen().val().toString() : '';
     }
 });
 
@@ -155,6 +150,7 @@ var ProductsView = Backbone.View.extend({
                 self.$el.on('change', self.store);
                 self.$el.chosen({max_selected_options: 8});
                 self.isChosenReady = true;
+                initUsersCallBack();
             } else {
                 self.$el.trigger("chosen:updated")
             }
@@ -177,6 +173,10 @@ var ProductsView = Backbone.View.extend({
         } else {
             throw Error('illegal chosen operation');
         }
+        app.Inited.calendar.reFetchEvents();
+    }
+    , getSelected: function () {
+        return this.$el.chosen().val() ? this.$el.chosen().val().toString() : '';
     }
 });
 
@@ -207,6 +207,7 @@ var UsersView = Backbone.View.extend({
                 self.isChosenReady = true;
                 self.$el.on('change', self.store);
                 self.$el.chosen({max_selected_options: 8});
+                initCalendarCallBack();
             } else {
                 self.$el.trigger("chosen:updated")
             }
@@ -229,6 +230,9 @@ var UsersView = Backbone.View.extend({
         } else {
             throw Error('illegal chosen operation');
         }
+    }
+    , getSelected: function () {
+        return this.$el.chosen().val() ? this.$el.chosen().val().toString() : '';
     }
 });
 

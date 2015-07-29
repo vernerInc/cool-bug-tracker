@@ -54,22 +54,15 @@ public class BugRestController {
     /*Read list of CRUD*/
     @SuppressWarnings("unchecked")
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "", params = {"userIds", "departmentIds", "productIds", "start", "end"}, method = RequestMethod.GET)
+    @RequestMapping(value = "", /*params = {"userIds", "departmentIds", "productIds", "start", "end"}, */method = RequestMethod.GET)
     public List<Bug> selectBugList(
-            @RequestParam("userIds") List<Long> userIds
-            , @RequestParam("departmentIds") List<Long> departmentIds
-            , @RequestParam("productIds") List<Long> productIds
+            @RequestParam(value = "userIds", required = false) List<Long> userIds
+            , @RequestParam(value = "departmentIds", required = false) List<Long> departmentIds
+            , @RequestParam(value = "productIds", required = false) List<Long> productIds
             , @RequestParam("start") Date start
             , @RequestParam("end") Date end
 
     ) {
-        if (start == null) {
-            throw new RestCommonException(RestError.START_DATE_IS_NULL);
-        }
-        if (end == null) {
-            throw new RestCommonException(RestError.END_DATE_IS_NULL);
-        }
-
         String sql = makeSql(start, end, userIds, departmentIds, productIds);
         Map<String, Object> params = makeParams(start, end, userIds, departmentIds, productIds);
 
@@ -102,7 +95,7 @@ public class BugRestController {
         if (productIds != null && !productIds.isEmpty()) {
             sql.append("AND b.product.id IN (:productIds)\n");
         } else if (departmentIds != null && !departmentIds.isEmpty()) {
-            sql.append("AND b.product_id IN (p.id FROM Product p WHERE p.department.id in (:departmentIds))\n");
+            sql.append("AND b.product.id IN (SELECT p.id FROM Product p WHERE p.department.id IN (:departmentIds))\n");
         }
 
         if (userIds != null && !userIds.isEmpty()) {

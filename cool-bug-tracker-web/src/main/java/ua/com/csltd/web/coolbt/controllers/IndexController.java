@@ -14,6 +14,7 @@ import ua.com.csltd.server.dao.badbtt.BaseBadDAO;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
 import ua.com.csltd.server.dao.coolbtt.BaseCoolDAO;
 import ua.com.csltd.server.dao.coolbtt.models.department.Department;
+import ua.com.csltd.server.dao.coolbtt.models.products.Product;
 
 import java.io.IOException;
 
@@ -33,12 +34,15 @@ public class IndexController {
     public BaseBadDAO<User> userBadDAO;
 
     @Autowired
+    public BaseCoolDAO<Product> productCoolDAO;
+
+    @Autowired
     private Json json;
 
     @Autowired
     private Environment env;
 
-    @RequestMapping({"/", "/home"})
+    @RequestMapping({"/", "/home", "/index"})
     @ResponseBody
     public ModelAndView home() {
         ModelAndView index = new ModelAndView("index");

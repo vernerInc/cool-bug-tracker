@@ -97,40 +97,70 @@
         }
     };
 
-    $(document).ready(function () {
-        // create namespace for our app
-        app.Views = {};
-        app.Models = {};
-        app.Collections = {};
+    var TemplateManager = {
+        templates: {},
 
-        app.Views.CalendarView = CalendarView;
-        app.Views.DepartmentView = DepartmentView;
-        app.Views.ProductsView = ProductsView;
-        app.Views.UsersView = UsersView;
+        get: function (id, callback) {
+            var template = this.templates[id];
+            if (template) {
+                callback(template.html());
+            } else {
+                var that = this;
+                $.get("script/app/templates/tpl-" + id + ".html").then(function (template) {
+                    var $tmpl = $(template);
+                    that.templates[id] = $tmpl;
+                    callback($tmpl.html());
+                });
+            }
+        }
+    };
 
-        app.Collections.Departments = Departments;
-        app.Collections.Products = Products;
-        app.Collections.Users = Users;
+    // create namespace for our app
+    app.Views = {};
+    app.Models = {};
+    app.Collections = {};
 
-        /*initilize*/
-        app.Inited = {};
+    app.Views.CalendarView = CalendarView;
+    app.Views.DepartmentView = DepartmentView;
+    app.Views.ProductsView = ProductsView;
+    app.Views.UsersView = UsersView;
 
-        /*Init departments*/
-        app.Inited.departments = new app.Collections.Departments();
+    app.Collections.DepartmentsCollection = DepartmentsCollection;
+    app.Collections.ProductsCollection = ProductsCollection;
+    app.Collections.UsersCollections = UsersCollection;
+
+    /*initilize all successively*/
+    app.Inited = {};
+
+    /*Init departments*/
+    var initDepartments = function (/*initProducts, initUsersCallBack, initCalendarCallBack*/) {
+        app.Inited.departments = new app.Collections.DepartmentsCollection();
         app.Inited.departments.reset(<c:out value="${departments}" escapeXml="false"/>);
-        new app.Views.DepartmentView(app.Inited.departments);
+        app.Inited.departmentView = new app.Views.DepartmentView(app.Inited.departments/*, initProductsCallBack, initUsersCallBack, initCalendarCallBack*/);
+    };
 
-        /*Init products*/
-        app.Inited.products = new app.Collections.Products();
+    /*Init products*/
+    var initProductsCallBack = function (/*initUsersCallBack, initCalendarCallBack*/) {
+        app.Inited.products = new app.Collections.ProductsCollection(/*initUsersCallBack, initCalendarCallBack*/);
+    };
 
-        /*Init user*/
-        app.Inited.users = new app.Collections.Users();
+
+    /*Init user*/
+    var initUsersCallBack = function (/*initCalendarCallBack*/) {
+        app.Inited.users = new app.Collections.UsersCollections();
         app.Inited.users.reset(<c:out value="${users}" escapeXml="false"/>);
-        new app.Views.UsersView(app.Inited.users);
+        app.Inited.userView = new app.Views.UsersView(app.Inited.users/*, initCalendarCallBack*/);
+    };
 
-        /*Init calendar*/
+    /*Init calendar*/
+    var initCalendarCallBack = function () {
         app.Inited.calendar = new app.Views.CalendarView();
+    };
 
+
+    $(document).ready(function () {
+        initDepartments();
+        /*after initProducts and another ones init on an each callback*/
     });
 
 </script>
