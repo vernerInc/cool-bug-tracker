@@ -1,0 +1,6 @@
+<script id="tpl-bugs-options" type="text/html">
+<option></option>
+<% _.each(items, function(item) { %>
+<option <% if(item.selected){%>selected<%}%> value="<%=item.id%>"><%=item.system.name + ' ' + item.bugNo%> - <%=item.title%></option>
+<% }); %>
+</script>

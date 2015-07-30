@@ -30,12 +30,10 @@ public class BadBug extends BaseEntity<Long> {
     @Column(name = "ID_BUG_TYPE")
     public Long bugTypeId;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_STATUS", referencedColumnName = "ID")
     private Status status;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRIORITY", referencedColumnName = "ID")
     private Priority priority;
@@ -52,8 +50,7 @@ public class BadBug extends BaseEntity<Long> {
     @Column(name = "DEADLINE")
     private String deadLine;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_SUBSYSTEM", referencedColumnName = "ID")
     private SubSystem system;
 

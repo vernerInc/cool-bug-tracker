@@ -29,9 +29,16 @@
 
     <script src='script/libs/jquerystorageapi/jquery.storageapi<c:out value="${min}"/>.js'></script>
 
-    <script src='script/app/views/AppViews.js'></script>
+    <script src='script/app/views/FiltersViews.js'></script>
+    <script src='script/app/views/CalendarView.js'></script>
+    <script src='script/app/views/ActionsView.js'></script>
+
     <script src='script/app/models/AppModels.js'></script>
     <script src='script/app/models/AppCollections.js'></script>
+
+    <script src='http://cdn.jsdelivr.net/qtip2/2.2.1/jquery.qtip<c:out value="${min}"/>.js'></script>
+    <link rel='stylesheet'
+          href='http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip<c:out value="${min}"/>.css'/>
 
     <link href='css/main-app.css' rel='stylesheet'/>
 
@@ -68,7 +75,15 @@
     <div id='left-panel-actions' class="left-panel left-panel-actions">
         <h4>Actions</h4>
 
-        <div class='fc-event choose-filter'>Find by BTT number</div>
+        <input type="text" id="searchBug" style="width:350px" placeholder="Enter number to find and press Enter"/>
+
+        <select data-placeholder="You can choose only one" multiple class="chosen-select"
+                style="width:350px"
+                tabindex="18"
+                id="bugsFound">
+        </select>
+
+
     </div>
 
     <div style='clear:both'></div>
@@ -133,23 +148,23 @@
     app.Inited = {};
 
     /*Init departments*/
-    var initDepartments = function (/*initProducts, initUsersCallBack, initCalendarCallBack*/) {
+    var initDepartments = function () {
         app.Inited.departments = new app.Collections.DepartmentsCollection();
         app.Inited.departments.reset(<c:out value="${departments}" escapeXml="false"/>);
-        app.Inited.departmentView = new app.Views.DepartmentView(app.Inited.departments/*, initProductsCallBack, initUsersCallBack, initCalendarCallBack*/);
+        app.Inited.departmentView = new app.Views.DepartmentView(app.Inited.departments);
     };
 
     /*Init products*/
-    var initProductsCallBack = function (/*initUsersCallBack, initCalendarCallBack*/) {
-        app.Inited.products = new app.Collections.ProductsCollection(/*initUsersCallBack, initCalendarCallBack*/);
+    var initProductsCallBack = function () {
+        app.Inited.products = new app.Collections.ProductsCollection();
     };
 
 
     /*Init user*/
-    var initUsersCallBack = function (/*initCalendarCallBack*/) {
+    var initUsersCallBack = function () {
         app.Inited.users = new app.Collections.UsersCollections();
         app.Inited.users.reset(<c:out value="${users}" escapeXml="false"/>);
-        app.Inited.userView = new app.Views.UsersView(app.Inited.users/*, initCalendarCallBack*/);
+        app.Inited.userView = new app.Views.UsersView(app.Inited.users);
     };
 
     /*Init calendar*/
@@ -161,6 +176,8 @@
     $(document).ready(function () {
         initDepartments();
         /*after initProducts and another ones init on an each callback*/
+
+        new LeftPanelActionsView();
     });
 
 </script>

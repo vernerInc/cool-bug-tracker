@@ -2,6 +2,8 @@ package ua.com.csltd.web.coolbt.controllers;
 
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import java.util.List;
 @RequestMapping({"/products"})
 @Transactional(value = "coolTransactionManager")
 public class ProductRestController {
+    private static final Logger logger = LoggerFactory.getLogger(ProductRestController.class);
+
 
     @Autowired
     private BaseCoolDAO<Product> productCoolDAO;

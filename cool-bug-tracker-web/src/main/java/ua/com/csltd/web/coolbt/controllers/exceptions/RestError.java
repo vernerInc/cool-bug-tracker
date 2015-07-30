@@ -9,6 +9,7 @@ public enum RestError {
     , SUCCESS(0, "SUCCESS")
     , START_DATE_IS_NULL(100, "Start date can't be null")
     , END_DATE_IS_NULL(101, "End date can't be null")
+    , INCORRECT_NUMBER_VALUE(102, "Incorrect number value")
     ;
 
     public final int code;

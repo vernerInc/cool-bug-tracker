@@ -18,7 +18,7 @@ public class SubSystem extends BaseEntity<Integer> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID")
-    private BadProduct priority;
+    private BadProduct product;
 
     @Column(name = "NAME")
     private String name;
@@ -39,14 +39,14 @@ public class SubSystem extends BaseEntity<Integer> {
     private User resposibleUser;
 
     @Column(name = "SUBSYSTEM_EMAIL")
-    private Integer email;
+    private String email;
 
-    public BadProduct getPriority() {
-        return priority;
+    public BadProduct getProduct() {
+        return product;
     }
 
-    public void setPriority(BadProduct priority) {
-        this.priority = priority;
+    public void setProduct(BadProduct product) {
+        this.product = product;
     }
 
     public String getName() {
@@ -89,11 +89,11 @@ public class SubSystem extends BaseEntity<Integer> {
         this.resposibleUser = resposibleUser;
     }
 
-    public Integer getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Integer email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }

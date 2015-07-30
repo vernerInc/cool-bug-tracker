@@ -48,3 +48,11 @@ var UsersCollection = Backbone.Collection.extend({
         return this;
     }
 });
+
+var BadBugCollection = Backbone.Collection.extend({
+    model: BadBugModel
+    , initialize: function (bugNo) {
+        this.url = 'ext/bugs/findBugByBugNo/' + bugNo;
+        return this;
+    }
+});

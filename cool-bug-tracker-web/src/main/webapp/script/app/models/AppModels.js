@@ -8,7 +8,6 @@ var DepartmentModel = Backbone.Model.extend({
 });
 
 
-
 var ProductModel = Backbone.Model.extend({
     defaults: {
         id: null
@@ -62,4 +61,30 @@ var User = Backbone.Model.extend({
     , validate: function (attr) {
     }
     , urlRoot: 'ext/user'
+});
+
+var BadBugModel = Backbone.Model.extend({
+    defaults: {
+        id: null
+        , bugNo: null
+        , bugDate: null
+        , productId: {}
+        , bugTypeId: null
+        , status: null
+        , priority: null
+        , title: null
+        , description: null
+        , version: {}
+        , deadLine: null
+        , system: {}
+        , productVersion: {}
+        , project: {}
+        , parent: {}
+    }
+    , idAttribute: "id"
+    , initialize: function () {
+    }
+    , validate: function (attr) {
+    }
+    , urlRoot: 'ext/bugs'
 });

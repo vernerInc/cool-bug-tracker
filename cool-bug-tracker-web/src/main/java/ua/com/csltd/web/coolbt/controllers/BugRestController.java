@@ -1,5 +1,7 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import ua.com.csltd.server.dao.coolbtt.BaseCoolDAO;
 import ua.com.csltd.server.dao.coolbtt.models.bug.Bug;
-import ua.com.csltd.web.coolbt.controllers.exceptions.RestCommonException;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestError;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestResult;
 
@@ -26,6 +27,9 @@ import java.util.Map;
 @RequestMapping({"/bug"})
 @Transactional(value = "coolTransactionManager")
 public class BugRestController {
+
+    private static final Logger logger = LoggerFactory.getLogger(BugRestController.class);
+
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
@@ -54,7 +58,7 @@ public class BugRestController {
     /*Read list of CRUD*/
     @SuppressWarnings("unchecked")
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "", /*params = {"userIds", "departmentIds", "productIds", "start", "end"}, */method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Bug> selectBugList(
             @RequestParam(value = "userIds", required = false) List<Long> userIds
             , @RequestParam(value = "departmentIds", required = false) List<Long> departmentIds
@@ -63,7 +67,7 @@ public class BugRestController {
             , @RequestParam("end") Date end
 
     ) {
-        String sql = makeSql(start, end, userIds, departmentIds, productIds);
+        String sql = makeSql(userIds, departmentIds, productIds);
         Map<String, Object> params = makeParams(start, end, userIds, departmentIds, productIds);
 
         return bugCoolDAO.listBySql(sql, params);
@@ -85,7 +89,7 @@ public class BugRestController {
         return new RestResult(RestError.SUCCESS);
     }
 
-    private String makeSql(Date start, Date end, List<Long> userIds, List<Long> departmentIds, List<Long> productIds) {
+    private String makeSql(List<Long> userIds, List<Long> departmentIds, List<Long> productIds) {
         StringBuilder sql = new StringBuilder()
                 .append("FROM  Bug b\n")
                 .append(" WHERE (:start BETWEEN b.start AND b.end\n")
