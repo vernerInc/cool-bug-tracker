@@ -40,9 +40,10 @@ var CalendarView = Backbone.View.extend({
             ]
             , eventRender: function (event, element) {
                 element.find('.fc-title').append(
+                    '<a href="csbtt2://id=' + event.bttBugId + '">' +
                     event.product.department.name + ' ' +
                     event.product.name + ' ' +
-                    event.bttBugNo + ' - ' +
+                    event.bttBugNo + '</a>' + ' - ' +
                     event.description + '<br/>' +
                     'Responsible user: ' + event.login);
             }
