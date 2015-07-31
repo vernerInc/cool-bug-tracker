@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @since : 21.07.2015
  */
 @MappedSuperclass
-public abstract class BaseEntity<ID> implements Serializable {
+public abstract class BadBaseEntity<ID> implements Serializable {
 
     @Id
     private ID id;

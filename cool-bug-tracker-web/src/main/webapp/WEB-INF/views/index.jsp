@@ -15,6 +15,8 @@
     <script src='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.js'></script>
     <script src='script/libs/fullcalendar/lang-all.js'></script>
 
+    <script src='script/libs/jquery/ui/jquery-ui<c:out value="${min}"/>.js'></script>
+
     <script src='script/libs/json/json2.js'></script>
     <script src='script/libs/underscore/underscore<c:out value="${min}"/>.js'></script>
     <script src='script/libs/backbone/backbone-1.2.1<c:out value="${min}"/>.js'></script>
@@ -50,21 +52,21 @@
     <div id='calendar'></div>
 
     <div id='left-panel-filters' class="left-panel">
-        <h4>Filters</h4>
+        <h4>Фильтры</h4>
 
-        <select data-placeholder="Select Department" multiple class="chosen-select"
+        <select data-placeholder="Выберите отдел" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="departments">
         </select>
 
-        <select data-placeholder="Select Products" multiple class="chosen-select"
+        <select data-placeholder="Выберите продукут" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="products">
         </select>
 
-        <select data-placeholder="Select User" multiple class="chosen-select"
+        <select data-placeholder="Выберите пользователя" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="users">
@@ -73,19 +75,30 @@
     </div>
 
     <div id='left-panel-actions' class="left-panel left-panel-actions">
-        <h4>Actions</h4>
+        <h4>Найти заявку</h4>
 
-        <input type="text" id="searchBug" style="width:350px" placeholder="Enter number to find and press Enter"/>
+        <input type="text" id="searchBug" style="width:347px; height: 25px"
+               placeholder="Введите номер открытой заявки и нажимите Enter"/>
 
-        <select data-placeholder="You can choose only one" multiple class="chosen-select"
+        <select data-placeholder="Можно выбрать только одну заявку" multiple class="chosen-select"
                 style="width:350px"
                 tabindex="18"
                 id="bugsFound">
         </select>
 
+        <select data-placeholder="Выберите отдел" multiple class="chosen-select"
+                style="width:350px"
+                tabindex="18"
+                id="bugsFoundDepartment">
+        </select>
 
+        <label for="from">From</label>
+        <input type="text" style="width:140px; height: 25px" id="from" name="from">
+        <label for="to">To</label>
+        <input type="text" style="width:140px; height: 25px" id="to" name="to">
+
+        <input type="submit" id="to-calendar" value="в календарь">
     </div>
-
     <div style='clear:both'></div>
 
 </div>
@@ -135,6 +148,12 @@
     app.Models = {};
     app.Collections = {};
 
+    app.Models.DepartmentModel = DepartmentModel;
+    app.Models.ProductModel = ProductModel;
+    app.Models.BugModel = BugModel;
+    app.Models.User = UserModel;
+    app.Models.BadBugModel = BadBugModel;
+
     app.Views.CalendarView = CalendarView;
     app.Views.DepartmentView = DepartmentView;
     app.Views.ProductsView = ProductsView;
@@ -177,7 +196,7 @@
         initDepartments();
         /*after initProducts and another ones init on an each callback*/
 
-        new LeftPanelActionsView();
+        app.Inited.leftPanelActionsView = new LeftPanelActionsView();
     });
 
 </script>

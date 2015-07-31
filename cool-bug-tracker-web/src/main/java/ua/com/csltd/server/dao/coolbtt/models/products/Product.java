@@ -1,7 +1,6 @@
 package ua.com.csltd.server.dao.coolbtt.models.products;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
 import ua.com.csltd.server.dao.coolbtt.models.department.Department;
 
 import javax.persistence.*;
@@ -12,8 +11,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "PRODUCTS")
-public class Product extends BaseEntity<Long> {
-
+@SequenceGenerator(name = "default_gen", sequenceName = "BTT.GEN_PRODUCT", allocationSize = 1)
+public class Product extends CoolBaseEntity<Long> {
 
     @Column(name = "NAME")
     private String name;

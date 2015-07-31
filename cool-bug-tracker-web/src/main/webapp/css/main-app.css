@@ -72,7 +72,7 @@ body {
     text-align: left;
 }
 
-#bugsFound_chosen, #searchBug, #departments_chosen, #users_chosen, #products_chosen {
+#bugsFound_chosen, #searchBug, #startDate, #endDate, #departments_chosen, #users_chosen, #products_chosen, #bugsFoundDepartment_chosen, #from, #to, #to-calendar{
     margin-bottom: 20px;
     text-align: left;
 }

@@ -25,24 +25,26 @@ var BugModel = Backbone.Model.extend({
         , bttBugId: null
         , bttBugNo: null
         , product: {}
-        , startDate: null
-        , endDate: null
+        , start: null
+        , end: null
     }
     , idAttribute: "id"
     , initialize: function () {
+        debugger;
         console.log('bug has been initialized');
         this.on("invalid", function (model, error) {
-            console.log("Houston, we have a problem: " + error)
         });
     }
     , constructor: function (attributes, options) {
+        debugger;
+        Backbone.Model.apply(this, arguments);
     }
     , validate: function (attr) {
     }
     , urlRoot: 'bug'
 });
 
-var User = Backbone.Model.extend({
+var UserModel = Backbone.Model.extend({
     defaults: {
         id: null
         , login: null

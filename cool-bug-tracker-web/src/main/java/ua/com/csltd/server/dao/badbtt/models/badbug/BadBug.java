@@ -1,11 +1,13 @@
 package ua.com.csltd.server.dao.badbtt.models.badbug;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.priority.Priority;
 import ua.com.csltd.server.dao.badbtt.models.productversion.ProductVersion;
 import ua.com.csltd.server.dao.badbtt.models.status.Status;
 import ua.com.csltd.server.dao.badbtt.models.subsystem.SubSystem;
+import ua.com.csltd.server.dao.badbtt.models.user.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,7 +18,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "Bugs")
-public class BadBug extends BaseEntity<Long> {
+public class BadBug extends BadBaseEntity<Long> {
 
     @Column(name = "BUG_NO")
     public Long bugNo;
@@ -68,6 +70,10 @@ public class BadBug extends BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PARENT", referencedColumnName = "ID")
     private BadBug parent;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RESPPERSON", referencedColumnName = "ID")
+    private User respUser;
 
     public Long getBugNo() {
         return bugNo;
@@ -179,5 +185,13 @@ public class BadBug extends BaseEntity<Long> {
 
     public void setParent(BadBug parent) {
         this.parent = parent;
+    }
+
+    public User getRespUser() {
+        return respUser;
+    }
+
+    public void setRespUser(User respUser) {
+        this.respUser = respUser;
     }
 }

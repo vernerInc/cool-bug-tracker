@@ -1,5 +1,6 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import ua.com.csltd.server.dao.badbtt.BaseBadDAO;
+import ua.com.csltd.server.dao.badbtt.models.badbug.BadBug;
+import ua.com.csltd.server.dao.badbtt.models.subsystem.SubSystem;
 import ua.com.csltd.server.dao.coolbtt.BaseCoolDAO;
 import ua.com.csltd.server.dao.coolbtt.models.bug.Bug;
+import ua.com.csltd.server.dao.coolbtt.models.department.Department;
+import ua.com.csltd.server.dao.coolbtt.models.products.Product;
+import ua.com.csltd.web.coolbt.controllers.exceptions.RestCommonException;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestError;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestResult;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : verner
@@ -40,10 +44,61 @@ public class BugRestController {
     @Autowired
     private BaseCoolDAO<Bug> bugCoolDAO;
 
+    @Autowired
+    private BaseBadDAO<BadBug> bugBadDAO;
+
+    @Autowired
+    private BaseCoolDAO<Product> productCoolDAO;
+
     /*Create of CRUD*/
     @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public RestResult persistBug(Bug bug) {
+    @SuppressWarnings("unchecked")
+    public RestResult persistBug(@RequestBody Bug bug) {
+        BadBug badBug = bugBadDAO.findById(bug.getBttBugId());
+
+        if (badBug == null) {
+            throw new RestCommonException(RestError.BUG_NOT_FOUND_IN_OLD_BTT);
+        }
+
+        bug.setBttBugNo(badBug.bugNo);
+        bug.setUserId(badBug.getRespUser().getId());
+        bug.setLogin(badBug.getRespUser().getLogin());
+        bug.setIsDeleted(false);
+        bug.setDescription(badBug.getTitle());
+
+        /*adding to end date 23 h 59 min 59s */
+        Calendar cal = Calendar.getInstance(); // creates calendar
+        cal.setTime(bug.getEnd()); // sets calendar time/date
+        cal.add(Calendar.HOUR_OF_DAY, 23);
+        cal.add(Calendar.MINUTE, 59);
+        cal.add(Calendar.SECOND, 59);
+        bug.setEnd(cal.getTime());
+
+        SubSystem system = badBug.getSystem();
+        List<Product> products = productCoolDAO.getSession()
+                .createCriteria(Product.class)
+                .add(Restrictions.eq("bttProductId", system.getProduct().getId()))
+                .add(Restrictions.eq("bttSubSystemId", system.getId()))
+                .list();
+
+        if (products == null || products.isEmpty()) {
+            Product product = new Product();
+            product.setName(system.getName());
+            product.setDescription(system.getDescription());
+            product.setDescription(system.getDescription());
+            product.setBttProductId(system.getProduct().getId());
+            product.setBttSubSystemId(system.getId());
+
+            Department department = new Department();
+            department.setId(bug.getProduct().getDepartment().getId());
+            product.setDepartment(department);
+            productCoolDAO.persist(product);
+            bug.setProduct(product);
+        } else {
+            bug.setProduct(products.get(0));
+        }
+
         bugCoolDAO.persist(bug);
         return new RestResult(RestError.SUCCESS);
     }

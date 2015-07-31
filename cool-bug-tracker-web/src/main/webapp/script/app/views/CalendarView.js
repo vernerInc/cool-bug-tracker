@@ -23,7 +23,7 @@ var CalendarView = Backbone.View.extend({
                 , header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
+                    right: 'month'
                 }
                 , weekends: true
                 , fixedWeekCount: false

@@ -1,7 +1,8 @@
 package ua.com.csltd.server.dao.badbtt;
 
 import org.hibernate.Session;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author : verner
  * @since : 21.07.2015
  */
-public class BaseBadDAO<T extends BaseEntity> {
+public class BaseBadDAO<T extends BadBaseEntity> {
 
     @PersistenceContext(unitName = "badPersistenceUnit")
     protected EntityManager entityManager;

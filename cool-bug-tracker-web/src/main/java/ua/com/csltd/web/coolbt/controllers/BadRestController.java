@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.NumberUtils;
 import org.springframework.web.bind.annotation.*;
+import ua.com.csltd.common.enums.BugStatus;
 import ua.com.csltd.server.dao.badbtt.BaseBadDAO;
 import ua.com.csltd.server.dao.badbtt.models.badbug.BadBug;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
@@ -16,6 +17,7 @@ import ua.com.csltd.web.coolbt.controllers.exceptions.RestCommonException;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestError;
 import ua.com.csltd.web.coolbt.controllers.exceptions.RestResult;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -77,7 +79,11 @@ public class BadRestController {
             throw new RestCommonException(RestError.INCORRECT_NUMBER_VALUE);
         }
 
-        return bugBadDAO.getSession().createCriteria(BadBug.class).add(Restrictions.eq("bugNo", lbugNo)).list();
+        return bugBadDAO.getSession()
+                .createCriteria(BadBug.class)
+                .add(Restrictions.eq("bugNo", lbugNo))
+                .add(Restrictions.in("status.id", Arrays.asList(BugStatus.OPEN.id, BugStatus.AWAITING.id)))
+                .list();
     }
 
     /*Read list of CRUD*/

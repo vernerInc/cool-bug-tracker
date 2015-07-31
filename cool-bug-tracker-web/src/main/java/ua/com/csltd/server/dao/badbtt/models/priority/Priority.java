@@ -1,6 +1,6 @@
 package ua.com.csltd.server.dao.badbtt.models.priority;
 
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PRIORITY")
-public class Priority extends BaseEntity<Long> {
+public class Priority extends BadBaseEntity<Long> {
 
     @Column(name = "NAME")
     private String name;

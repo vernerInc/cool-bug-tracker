@@ -1,9 +1,11 @@
 package ua.com.csltd.server.dao.coolbtt.models.bug;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Type;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
+import ua.com.csltd.common.utils.CustomDateDeSerialization;
 import ua.com.csltd.common.utils.CustomDateSerializer;
 import ua.com.csltd.server.dao.coolbtt.models.products.Product;
 
@@ -16,7 +18,8 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "BUGS")
-public class Bug extends BaseEntity<Long> {
+@SequenceGenerator(name = "default_gen", sequenceName = "BTT.GEN_BUGS", allocationSize = 1)
+public class Bug extends CoolBaseEntity<Long> {
 
     @Column(name = "BTT_BUG_ID")
     public Long bttBugId;
@@ -31,10 +34,12 @@ public class Bug extends BaseEntity<Long> {
 
     @Column(name = "START_DATE")
     @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeSerialization.class)
     public Date start;
 
     @Column(name = "END_DATE")
     @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeSerialization.class)
     public Date end;
 
     @JsonIgnore

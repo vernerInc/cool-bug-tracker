@@ -1,7 +1,7 @@
 package ua.com.csltd.server.dao.coolbtt;
 
 import org.hibernate.Session;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @author : verner
  * @since : 21.07.2015
  */
-public class BaseCoolDAO<T extends BaseEntity> {
+public class BaseCoolDAO<T extends CoolBaseEntity> {
 
     @PersistenceContext(unitName = "coolPersistenceUnit")
     protected EntityManager entityManager;

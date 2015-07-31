@@ -2,7 +2,7 @@ package ua.com.csltd.server.dao.badbtt.models.subsystem;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.product.BadProduct;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
 
@@ -14,7 +14,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "SUBSYSTEM")
-public class SubSystem extends BaseEntity<Integer> {
+public class SubSystem extends BadBaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID")

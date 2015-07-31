@@ -1,7 +1,7 @@
 package ua.com.csltd.server.dao.badbtt.models.department;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.user.User;
 
 import javax.persistence.*;
@@ -12,7 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "DEPARTMENT")
-public class BadDepartment extends BaseEntity<Long> {
+public class BadDepartment extends BadBaseEntity<Long> {
 
     @Column(name = "NAME")
     private String name;

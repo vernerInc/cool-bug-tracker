@@ -2,7 +2,7 @@ package ua.com.csltd.server.dao.badbtt.models.productversion;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.product.BadProduct;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "PRODUCT_VERSION")
-public class ProductVersion extends BaseEntity<Long> {
+public class ProductVersion extends BadBaseEntity<Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID")

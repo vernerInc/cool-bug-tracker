@@ -43,7 +43,7 @@ var ProductsCollection = Backbone.Collection.extend({
 });
 
 var UsersCollection = Backbone.Collection.extend({
-    model: User
+    model: UserModel
     , initialize: function () {
         return this;
     }

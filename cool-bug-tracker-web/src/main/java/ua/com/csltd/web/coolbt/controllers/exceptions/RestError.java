@@ -10,6 +10,9 @@ public enum RestError {
     , START_DATE_IS_NULL(100, "Start date can't be null")
     , END_DATE_IS_NULL(101, "End date can't be null")
     , INCORRECT_NUMBER_VALUE(102, "Incorrect number value")
+
+    , BUG_NOT_FOUND_IN_OLD_BTT(103, "bug is not found in old btt")
+
     ;
 
     public final int code;

@@ -2,7 +2,7 @@ package ua.com.csltd.server.dao.badbtt.models.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.BadBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.department.BadDepartment;
 
 import javax.persistence.*;
@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "USERS")
-public class User extends BaseEntity<Long> {
+public class User extends BadBaseEntity<Long> {
 
     @Column(name = "LOGIN")
     private String login;

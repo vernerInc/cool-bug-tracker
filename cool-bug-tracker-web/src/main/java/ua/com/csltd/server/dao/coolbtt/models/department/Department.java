@@ -1,9 +1,10 @@
 package ua.com.csltd.server.dao.coolbtt.models.department;
 
-import ua.com.csltd.common.models.BaseEntity;
+import ua.com.csltd.common.models.CoolBaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -12,7 +13,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DEPARTMENT")
-public class Department extends BaseEntity<Long> {
+@SequenceGenerator(name = "default_gen", sequenceName = "BTT.GEN_DEPARTMENT", allocationSize = 1)
+public class Department extends CoolBaseEntity<Long> {
 
     @Column(name = "NAME")
     private String name;
