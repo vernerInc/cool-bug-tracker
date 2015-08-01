@@ -84,7 +84,7 @@ public class BugRestController {
 
         if (products == null || products.isEmpty()) {
             Product product = new Product();
-            product.setName(system.getName());
+            product.setName(system.getProduct().getName() + "." + system.getName());
             product.setDescription(system.getDescription());
             product.setDescription(system.getDescription());
             product.setBttProductId(system.getProduct().getId());
