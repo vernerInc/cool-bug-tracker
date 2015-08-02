@@ -1,5 +1,6 @@
 package ua.com.csltd.web.coolbt.controllers;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,12 +68,10 @@ public class BugRestController {
         bug.setIsDeleted(false);
         bug.setDescription(badBug.getTitle());
 
-        /*adding to end date 23 h 59 min 59s */
+        /*adding to end date one day excuded in calendar view*/
         Calendar cal = Calendar.getInstance(); // creates calendar
-        cal.setTime(bug.getEnd()); // sets calendar time/date
-        cal.add(Calendar.HOUR_OF_DAY, 23);
-        cal.add(Calendar.MINUTE, 59);
-        cal.add(Calendar.SECOND, 59);
+        cal.setTime(bug.getEnd());
+        cal.add(Calendar.DAY_OF_MONTH, 1);
         bug.setEnd(cal.getTime());
 
         SubSystem system = badBug.getSystem();
@@ -85,8 +84,7 @@ public class BugRestController {
         if (products == null || products.isEmpty()) {
             Product product = new Product();
             product.setName(system.getProduct().getShortName() + "." + system.getName());
-            product.setDescription(system.getDescription());
-            product.setDescription(system.getDescription());
+            product.setDescription(StringUtils.isNotEmpty(system.getDescription()) ? system.getDescription() : system.getName());
             product.setBttProductId(system.getProduct().getId());
             product.setBttSubSystemId(system.getId());
 

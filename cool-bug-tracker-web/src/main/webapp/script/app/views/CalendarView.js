@@ -18,16 +18,13 @@ var CalendarView = Backbone.View.extend({
                 , header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month'
+                    right: 'month basicWeek basicDay'
                 }
                 , weekends: true
                 , fixedWeekCount: false
                 , firstDay: 1
                 , editable: true
-                , eventLimit: true
-                , droppable: true
-                , drop: function () {
-                }
+                , resizable: true
                 , eventSources: [
                     {
                         url: 'bug',
@@ -60,8 +57,7 @@ var CalendarView = Backbone.View.extend({
                         'Responsible user: ' + '<a class="login">' + event.login + '</a>');
                 }
 
-                ,
-                nextDayThreshold: "23:59:59"
+                //,nextDayThreshold: "23:59:59"
             });
 
             return this;

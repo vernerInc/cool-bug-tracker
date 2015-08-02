@@ -7,15 +7,14 @@
 
     <link rel='stylesheet' href='script/libs/fullcalendar/lib/cupertino/jquery-ui.min.css'/>
     <link href='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.css' rel='stylesheet'/>
-    <link href='script/libs/fullcalendar/fullcalendar.print.css' rel='stylesheet' media='print'/>
 
     <script src='script/libs/fullcalendar/lib/moment.min.js'></script>
     <script src='script/libs/jquery/jquery-1.11.3<c:out value="${min}"/>.js'></script>
+    <script src='script/libs/jquery/ui/jquery-ui<c:out value="${min}"/>.js'></script>
     <script src='script/libs/fullcalendar/lib/jquery-ui.custom.min.js'></script>
     <script src='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.js'></script>
     <script src='script/libs/fullcalendar/lang-all.js'></script>
 
-    <script src='script/libs/jquery/ui/jquery-ui<c:out value="${min}"/>.js'></script>
 
     <script src='script/libs/json/json2.js'></script>
     <script src='script/libs/underscore/underscore<c:out value="${min}"/>.js'></script>

@@ -128,4 +128,8 @@ public class Bug extends CoolBaseEntity<Long> {
         this.description = description;
     }
 
+    public boolean isAllDay() {
+        return true;
+    }
+
 }
