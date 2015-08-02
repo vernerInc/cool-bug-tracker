@@ -25,6 +25,7 @@ public class User extends BadBaseEntity<Long> {
     @Column(name = "LAST_NAME")
     private String lastName;
 
+    @JsonIgnore
     @Column(name = "MIDDLE_NAME")
     private String middleName;
 
@@ -33,6 +34,7 @@ public class User extends BadBaseEntity<Long> {
     @JoinColumn(name = "id_boss", referencedColumnName = "ID")
     private User boss;
 
+    @JsonIgnore
     @Column(name = "CREATINGTIME")
     private Timestamp creatingTime;
 
@@ -41,10 +43,12 @@ public class User extends BadBaseEntity<Long> {
     @JoinColumn(name = "ID_DEPARTMENT", referencedColumnName = "ID")
     private BadDepartment department;
 
+    @JsonIgnore
     @Column(name = "SHOWALL")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean showAll;
 
+    @JsonIgnore
     @Column(name = "ISDELETED")
     @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean isDeleted;

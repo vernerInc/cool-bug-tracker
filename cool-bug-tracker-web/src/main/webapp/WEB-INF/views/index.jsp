@@ -60,7 +60,7 @@
                 id="departments">
         </select>
 
-        <select data-placeholder="Выберите продукут" multiple class="chosen-select"
+        <select data-placeholder="Выберите продукт" multiple class="chosen-select"
                 style="width:350px; display: none"
                 tabindex="18"
                 id="products">
@@ -75,7 +75,7 @@
     </div>
 
     <div id='left-panel-actions' class="left-panel left-panel-actions">
-        <h4>Найти заявку</h4>
+        <h4>Запланировать заявку</h4>
 
         <input type="text" id="searchBug" style="width:347px; height: 25px"
                placeholder="Введите номер открытой заявки и нажимите Enter"/>

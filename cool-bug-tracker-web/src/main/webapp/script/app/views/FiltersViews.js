@@ -2,7 +2,7 @@ var DepartmentView = Backbone.View.extend({
     el: '#departments'
     , isChosenReady: false
     , template: 'options'
-    , initialize: function (items/*, initProductsCallBack, initUsersCallBack, initCalendarCallBack*/) {
+    , initialize: function (items) {
         var jsonItems = items.toJSON();
         var selected = StorageManager.get(storages.departments);
         _.each(selected, function (item) {
