@@ -47,7 +47,11 @@ var LeftPanelActionsView = Backbone.View.extend({
     }
 
     , searchBug: function (event) {
-        if (event.which !== 13 || !$(event.currentTarget).val().trim()) { // ENTER_KEY = 13
+        if (event.which !== 13) { // ENTER_KEY = 13
+            return;
+        }
+        if (!$(event.currentTarget).val().trim()) {
+            app.Inited.foundBugsView.render({});
             return;
         }
 

@@ -106,7 +106,6 @@
 </body>
 
 <script>
-    var app = {};
     var storages = {
         departments: 'departments'
         , products: 'products'
@@ -144,6 +143,7 @@
     };
 
     // create namespace for our app
+    var app = {};
     app.Views = {};
     app.Models = {};
     app.Collections = {};
