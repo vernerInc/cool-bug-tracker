@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import ua.com.csltd.common.models.BadBaseEntity;
 import ua.com.csltd.common.models.CoolBaseEntity;
 import ua.com.csltd.server.dao.badbtt.models.priority.Priority;
+import ua.com.csltd.server.dao.badbtt.models.product.BadProduct;
 import ua.com.csltd.server.dao.badbtt.models.productversion.ProductVersion;
 import ua.com.csltd.server.dao.badbtt.models.status.Status;
 import ua.com.csltd.server.dao.badbtt.models.subsystem.SubSystem;
@@ -26,8 +27,9 @@ public class BadBug extends BadBaseEntity<Long> {
     @Column(name = "BUG_DATE")
     public Timestamp bugDate;
 
-    @Column(name = "ID_PRODUCT")
-    public Long productId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ID_PRODUCT", referencedColumnName = "ID")
+    public BadProduct product;
 
     @Column(name = "ID_BUG_TYPE")
     public Long bugTypeId;
@@ -91,12 +93,12 @@ public class BadBug extends BadBaseEntity<Long> {
         this.bugDate = bugDate;
     }
 
-    public Long getProductId() {
-        return productId;
+    public BadProduct getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(BadProduct product) {
+        this.product = product;
     }
 
     public Long getBugTypeId() {
