@@ -68,7 +68,7 @@ public class BugRestController {
         bug.setIsDeleted(false);
         bug.setDescription(badBug.getTitle());
 
-        /*adding to end date one day excuded in calendar view*/
+        /*adding to end date one day excluded in calendar view*/
         Calendar cal = Calendar.getInstance(); // creates calendar
         cal.setTime(bug.getEnd());
         cal.add(Calendar.DAY_OF_MONTH, 1);
