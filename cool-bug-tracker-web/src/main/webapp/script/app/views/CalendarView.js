@@ -6,6 +6,7 @@ var CalendarView = Backbone.View.extend({
             , shepeleva : {url:'http://cdn.fishki.net/upload/post/201408/25/1297409/gallery/88bb93221f58c73eb80f508ac5bac3dd.gif',style: 'style="width: 150px"'}
         },
         initialize: function () {
+            setInterval(this.reFetchEvents, 90000);
             this.render();
         },
 
@@ -99,7 +100,7 @@ var CalendarView = Backbone.View.extend({
         }
         ,
         reFetchEvents: function () {
-            this.$el.fullCalendar('refetchEvents');
+            $('#calendar').fullCalendar('refetchEvents');
         }
     })
     ;
