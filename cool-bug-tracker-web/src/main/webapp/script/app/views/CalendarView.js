@@ -2,20 +2,9 @@ var CalendarView = Backbone.View.extend({
         el: '#calendar'
         , isLoaded: false
         , heroes: {
-            verner: {
-                url: 'http://vk.com/doc157291948_409938932?hash=86062cc7a7cd763115&dl=bf19698e9c6e92ac5a&wnd=1',
-                style: 'style="width: 120px"'
-            }
-            ,
-            nikulin: {
-                url: 'http://img0.joyreactor.cc/pics/post/%D0%B3%D0%B8%D1%84%D0%BA%D0%B8-%D0%BD%D0%B8%D0%BA%D1%83%D0%BB%D0%B8%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B1%D0%B5%D1%81-211272.gif',
-                style: 'style="width: 120px"'
-            }
-            ,
-            shepeleva: {
-                url: 'http://cs.pikabu.ru/images/big_size_comm/2012-11_6/1353924790803.gif',
-                style: 'style="width: 200px"'
-            }
+            verner: {url: 'http://vk.com/doc157291948_409938932?hash=86062cc7a7cd763115&dl=bf19698e9c6e92ac5a&wnd=1',style: 'style="width: 120px"'}
+            ,nikulin: {url: 'http://img0.joyreactor.cc/pics/post/%D0%B3%D0%B8%D1%84%D0%BA%D0%B8-%D0%BD%D0%B8%D0%BA%D1%83%D0%BB%D0%B8%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B1%D0%B5%D1%81-211272.gif',style: 'style="width: 120px"'}
+            ,shepeleva: {url: 'http://cs.pikabu.ru/images/big_size_comm/2012-11_6/1353924790803.gif',style: 'style="width: 200px"'}
         }
         , initialize: function () {
             setInterval(this.reFetchEvents, 180000);
@@ -28,7 +17,7 @@ var CalendarView = Backbone.View.extend({
                 , lang: 'ru'
                 , aspectRatio: 1.65
                 , header: {
-                    left: 'prev,next today',
+                    left: 'prev,next,today',
                     center: 'title',
                     right: 'month basicWeek basicDay'
                 }
@@ -72,7 +61,7 @@ var CalendarView = Backbone.View.extend({
                         event.product.name + ' ' +
                         event.bttBugNo + '</a>' + ' - ' +
                         event.description + '<br/>' +
-                        'Responsible user: ');
+                        titles.responsible + ': ');
 
                     var $a = $('<a class="login">' + event.login + '</a>');
                     find.append($a);

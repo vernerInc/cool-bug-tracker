@@ -3,7 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Cool Bug Tracker</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
 
     <link rel='stylesheet' href='script/libs/fullcalendar/lib/cupertino/jquery-ui.min.css'/>
     <link href='script/libs/fullcalendar/fullcalendar<c:out value="${min}"/>.css' rel='stylesheet'/>
@@ -105,6 +109,7 @@
 </body>
 
 <script>
+    var titles = {responsible: "Ответственный"};
     var storages = {
         departments: 'departments'
         , products: 'products'
@@ -197,6 +202,5 @@
 
         app.Inited.leftPanelActionsView = new LeftPanelActionsView();
     });
-
 </script>
 </html>
