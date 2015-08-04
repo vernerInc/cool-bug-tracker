@@ -68,6 +68,7 @@ var CalendarView = Backbone.View.extend({
                         id: event.id
                         , start: event.start.format('DD.MM.YYYY')
                         , end: event.end.format('DD.MM.YYYY')
+                        , deleted: event.deleted
                     };
                     self.updateDuration(attributes, revertFunc);
                 }
@@ -76,6 +77,7 @@ var CalendarView = Backbone.View.extend({
                         id: event.id
                         , start: event.start.format('DD.MM.YYYY')
                         , end: event.end.format('DD.MM.YYYY')
+                        , deleted: event.deleted
                     };
                     self.updateDuration(attributes, revertFunc);
                 }

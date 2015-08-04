@@ -65,7 +65,7 @@ public class BugRestController {
         bug.setBttBugNo(badBug.bugNo);
         bug.setUserId(badBug.getRespUser().getId());
         bug.setLogin(badBug.getRespUser().getLogin());
-        bug.setIsDeleted(false);
+        bug.setDeleted(false);
         bug.setDescription(badBug.getTitle());
 
         /*adding to end date one day excluded in calendar view*/
@@ -138,8 +138,9 @@ public class BugRestController {
             throw new RestCommonException(RestError.INCORRECT_REQUEST_BODY_PARAM);
         }
 
-        byId.setStart(bug.getStart());
-        byId.setEnd(bug.getEnd());
+        byId.setStart(bug.getStart() != null ? bug.getStart() : byId.getStart());
+        byId.setEnd(bug.getEnd() != null ? bug.getEnd() : byId.getEnd());
+        byId.setDeleted(bug.getDeleted() != null ? bug.getDeleted() : byId.getDeleted());
 
         bugCoolDAO.update(byId);
         return new RestResult(RestError.SUCCESS);
@@ -170,7 +171,7 @@ public class BugRestController {
             sql.append("AND b.userId IN (:userIds)\n");
         }
 
-        sql.append("AND b.isDeleted = :isDeleted");
+        sql.append("AND b.deleted = :isDeleted");
         return sql.toString();
     }
 

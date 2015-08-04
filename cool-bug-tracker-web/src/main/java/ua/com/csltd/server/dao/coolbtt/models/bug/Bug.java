@@ -42,10 +42,9 @@ public class Bug extends CoolBaseEntity<Long> {
     @JsonDeserialize(using = CustomDateDeSerialization.class)
     private Date end;
 
-    @JsonIgnore
     @Column(name = "IS_DELETED")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    private boolean isDeleted;
+    private Boolean deleted;
 
     @Column(name = "BTT_USER_RESPONSIBLE_ID")
     private Long userId;
@@ -96,12 +95,12 @@ public class Bug extends CoolBaseEntity<Long> {
         this.end = end;
     }
 
-    public boolean isDeleted() {
-        return isDeleted;
+    public Boolean getDeleted() {
+        return deleted;
     }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     public Long getUserId() {
