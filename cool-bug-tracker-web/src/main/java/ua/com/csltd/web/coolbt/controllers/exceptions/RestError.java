@@ -12,6 +12,8 @@ public enum RestError {
     , INCORRECT_NUMBER_VALUE(102, "Incorrect number value")
 
     , BUG_NOT_FOUND_IN_OLD_BTT(103, "bug is not found in old btt")
+    , BUG_NOT_FOUND_IN_NEW_BTT(104, "bug is not found in new btt")
+    , INCORRECT_REQUEST_BODY_PARAM(105, "incorrect request body param")
 
     ;
 

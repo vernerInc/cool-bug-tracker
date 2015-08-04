@@ -128,9 +128,20 @@ public class BugRestController {
 
     /*Update of CRUD*/
     @ResponseStatus(HttpStatus.OK)
-    @RequestMapping(value = "", method = RequestMethod.PUT)
-    public RestResult updateBug(Bug bug) {
-        bugCoolDAO.update(bug);
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public RestResult updateBug(@PathVariable("id") final Long id, @RequestBody Bug bug) {
+        Bug byId = bugCoolDAO.findById(id);
+        if (byId == null) {
+            throw new RestCommonException(RestError.BUG_NOT_FOUND_IN_NEW_BTT);
+        }
+        if (bug == null) {
+            throw new RestCommonException(RestError.INCORRECT_REQUEST_BODY_PARAM);
+        }
+
+        byId.setStart(bug.getStart());
+        byId.setEnd(bug.getEnd());
+
+        bugCoolDAO.update(byId);
         return new RestResult(RestError.SUCCESS);
     }
 

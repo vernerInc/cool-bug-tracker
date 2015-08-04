@@ -24,19 +24,19 @@ var BugModel = Backbone.Model.extend({
         id: null
         , bttBugId: null
         , bttBugNo: null
-        , product: {}
+        , product: null
         , start: null
         , end: null
+        , userId: null
+        , login: null
+        , description: null
     }
     , idAttribute: "id"
     , initialize: function () {
-        debugger;
-        console.log('bug has been initialized');
         this.on("invalid", function (model, error) {
         });
     }
     , constructor: function (attributes, options) {
-        debugger;
         Backbone.Model.apply(this, arguments);
     }
     , validate: function (attr) {

@@ -21,40 +21,40 @@ import java.util.Date;
 @SequenceGenerator(name = "default_gen", sequenceName = "BTT.GEN_BUGS", allocationSize = 1)
 public class Bug extends CoolBaseEntity<Long> {
 
-    @Column(name = "BTT_BUG_ID")
+    @Column(name = "BTT_BUG_ID", updatable = false)
     public Long bttBugId;
 
-    @Column(name = "BTT_BUG_NO")
+    @Column(name = "BTT_BUG_NO", updatable = false)
     public Long bttBugNo;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID", updatable = false)
     private Product product;
 
 
     @Column(name = "START_DATE")
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeSerialization.class)
-    public Date start;
+    private Date start;
 
     @Column(name = "END_DATE")
     @JsonSerialize(using = CustomDateSerializer.class)
     @JsonDeserialize(using = CustomDateDeSerialization.class)
-    public Date end;
+    private Date end;
 
     @JsonIgnore
     @Column(name = "IS_DELETED")
     @Type(type = "org.hibernate.type.NumericBooleanType")
-    public boolean isDeleted;
+    private boolean isDeleted;
 
     @Column(name = "BTT_USER_RESPONSIBLE_ID")
-    public Long userId;
+    private Long userId;
 
     @Column(name = "BTT_USER_LOGIN")
-    public String login;
+    private String login;
 
-    @Column(name = "DESCRIPTION")
-    public String description;
+    @Column(name = "DESCRIPTION", updatable = false)
+    private String description;
 
     public Long getBttBugId() {
         return bttBugId;
