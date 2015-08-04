@@ -4,6 +4,8 @@
 <html>
 <head>
     <title>Cool Bug Tracker</title>
+    <link href="favicon.ico" rel="icon" type="image/png" />
+    <link href="favicon.ico" rel="shortcut icon" type="image/png" />
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
