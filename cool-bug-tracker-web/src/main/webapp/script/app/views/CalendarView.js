@@ -1,16 +1,27 @@
 var CalendarView = Backbone.View.extend({
-        el: '#calendar',
-        heroes: {
-            verner: {url: 'http://vk.com/doc157291948_409938932?hash=86062cc7a7cd763115&dl=bf19698e9c6e92ac5a&wnd=1',style: 'style="width: 120px"'}
-            ,nikulin: {url: 'http://img0.joyreactor.cc/pics/post/%D0%B3%D0%B8%D1%84%D0%BA%D0%B8-%D0%BD%D0%B8%D0%BA%D1%83%D0%BB%D0%B8%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B1%D0%B5%D1%81-211272.gif',style: 'style="width: 120px"'}
-            , shepeleva : {url:'http://cdn.fishki.net/upload/post/201408/25/1297409/gallery/88bb93221f58c73eb80f508ac5bac3dd.gif',style: 'style="width: 150px"'}
-        },
-        initialize: function () {
+        el: '#calendar'
+        , isLoaded: false
+        , heroes: {
+            verner: {
+                url: 'http://vk.com/doc157291948_409938932?hash=86062cc7a7cd763115&dl=bf19698e9c6e92ac5a&wnd=1',
+                style: 'style="width: 120px"'
+            }
+            ,
+            nikulin: {
+                url: 'http://img0.joyreactor.cc/pics/post/%D0%B3%D0%B8%D1%84%D0%BA%D0%B8-%D0%BD%D0%B8%D0%BA%D1%83%D0%BB%D0%B8%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B1%D0%B5%D1%81-211272.gif',
+                style: 'style="width: 120px"'
+            }
+            ,
+            shepeleva: {
+                url: 'http://cs.pikabu.ru/images/big_size_comm/2012-11_6/1353924790803.gif',
+                style: 'style="width: 200px"'
+            }
+        }
+        , initialize: function () {
             setInterval(this.reFetchEvents, 180000);
             this.render();
-        },
-
-        render: function () {
+        }
+        , render: function () {
             var self = this;
             this.$el.fullCalendar({
                 theme: true
@@ -43,25 +54,56 @@ var CalendarView = Backbone.View.extend({
                     }
                 ]
 
+                , viewRender: function () {
+                    $(".qtip").remove();
+                }
+
                 , loading: function (isLoading, view) {
-                    if (!isLoading) {
-                        self.tipLogins();
+                    if (isLoading) {
+                        $(".qtip").remove();
                     }
                 }
 
                 , eventRender: function (event, element) {
-                    element.find('.fc-title').append(
+                    var find = element.find('.fc-title');
+
+                    find.append(
                         '<a href="csbtt2://id=' + event.bttBugId + '">' +
                         event.product.name + ' ' +
                         event.bttBugNo + '</a>' + ' - ' +
                         event.description + '<br/>' +
-                        'Responsible user: ' + '<a class="login">' + event.login + '</a>');
+                        'Responsible user: ');
+
+                    var $a = $('<a class="login">' + event.login + '</a>');
+                    find.append($a);
+                    self.tipLogin(event.login, $a);
                 }
+
 
                 //,nextDayThreshold: "23:59:59"
             });
 
             return this;
+        }
+
+        , tipLogin: function (login, obj) {
+            var self = this;
+            var url, style;
+            if (_.has(this.heroes, login)) {
+                var hero = this.heroes[login];
+                url = hero.url;
+                style = hero.style;
+            } else {
+                url = 'http://rainbow/cs/photo/thumb/' + login + '.jpg';
+            }
+
+            $(obj).qtip({
+                content: {
+                    text: function () {
+                        return '<img src="' + url + '" ' + (style ? style : '') + '>';
+                    }
+                }
+            });
         }
 
         , tipLogins: function () {
@@ -70,22 +112,7 @@ var CalendarView = Backbone.View.extend({
             $(function () {
                     $("a.login").each(function () {
                         var login = this.text;
-                        var url, style;
-                        if (_.has(self.heroes, login)) {
-                            var hero = self.heroes[login];
-                            url = hero.url;
-                            style = hero.style;
-                        } else {
-                            url = 'http://rainbow/cs/photo/thumb/' + login + '.jpg';
-                        }
-
-                        $(this).qtip({
-                            content: {
-                                text: function () {
-                                    return '<img src="' + url + '" ' + (style ? style : '') + '>';
-                                }
-                            }
-                        });
+                        self.tipLogin(login, this);
                     });
                 }
             );
