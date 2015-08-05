@@ -151,7 +151,7 @@ var heroes = {
     }
     ,
     nikulin: {
-        url: 'http://img0.joyreactor.cc/pics/post/%D0%B3%D0%B8%D1%84%D0%BA%D0%B8-%D0%BD%D0%B8%D0%BA%D1%83%D0%BB%D0%B8%D0%BD-%D0%B1%D0%B0%D0%BB%D0%B1%D0%B5%D1%81-211272.gif',
+        url: 'http://www.russkoekino.ru/pic/star-088b.jpg',
         style: 'style="width: 120px"'
     }
     ,
@@ -159,4 +159,4 @@ var heroes = {
         url: 'http://cs.pikabu.ru/images/big_size_comm/2012-11_6/1353924790803.gif',
         style: 'style="width: 200px"'
     }
-}
+};
