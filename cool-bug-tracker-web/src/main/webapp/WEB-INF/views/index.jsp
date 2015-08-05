@@ -83,7 +83,7 @@
         <h4>Запланировать заявку</h4>
 
         <input type="text" id="searchBug" style="width:347px; height: 25px"
-               placeholder="Введите номер открытой заявки и нажимите Enter"/>
+               placeholder="Введите номер открытой заявки и нажмите Enter"/>
 
         <select data-placeholder="Можно выбрать только одну заявку" multiple class="chosen-select"
                 style="width:350px"
@@ -97,9 +97,9 @@
                 id="bugsFoundDepartment">
         </select>
 
-        <label for="from">From</label>
+        <label for="from">от</label>
         <input type="text" style="width:140px; height: 25px" id="from" name="from">
-        <label for="to">To</label>
+        <label for="to">по</label>
         <input type="text" style="width:140px; height: 25px" id="to" name="to">
 
         <input type="submit" id="to-calendar" value="в календарь">
