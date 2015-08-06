@@ -1,6 +1,5 @@
 var CalendarView = Backbone.View.extend({
         el: '#calendar'
-        , $qtip: $(".qtip")
         , isLoaded: false
         , initialize: function () {
             setInterval(this.reFetchEvents, 180000);
@@ -40,12 +39,12 @@ var CalendarView = Backbone.View.extend({
                 ]
 
                 , viewRender: function () {
-                    self.$qtip.remove();
+                    $(".qtip").remove();
                 }
 
                 , loading: function (isLoading, view) {
                     if (isLoading) {
-                        self.$qtip.remove();
+                        $(".qtip").remove();
                     }
                 }
 
@@ -125,7 +124,7 @@ var CalendarView = Backbone.View.extend({
 
         , tipLogins: function () {
             var self = this;
-            this.$qtip.remove();
+            $(".qtip").remove();
             $(function () {
                     $("a.login").each(function () {
                         var login = this.text;
