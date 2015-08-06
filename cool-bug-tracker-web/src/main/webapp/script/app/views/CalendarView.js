@@ -1,5 +1,6 @@
 var CalendarView = Backbone.View.extend({
         el: '#calendar'
+        , $qtip: $(".qtip")
         , isLoaded: false
         , initialize: function () {
             setInterval(this.reFetchEvents, 180000);
@@ -39,24 +40,29 @@ var CalendarView = Backbone.View.extend({
                 ]
 
                 , viewRender: function () {
-                    $(".qtip").remove();
+                    self.$qtip.remove();
                 }
 
                 , loading: function (isLoading, view) {
                     if (isLoading) {
-                        $(".qtip").remove();
+                        self.$qtip.remove();
                     }
                 }
 
                 , eventRender: function (event, element) {
-                    var find = element.find('.fc-title');
+                    var descr = event.product.name + ' ' + event.bttBugNo + '</a>' + ' - ' + event.description + '<br/>';
+                    element.qtip({
+                        content: descr
+                        , position: {
+                            my: 'bottom left',
+                            at: 'top left'
+                        }
+                    });
 
+                    var find = element.find('.fc-title');
                     find.append(
                         '<a class="bugNo" href="csbtt2://id=' + event.bttBugId + '">' +
-                        event.product.name + ' ' +
-                        event.bttBugNo + '</a>' + ' - ' +
-                        event.description + '<br/>' +
-                        titles.responsible + ': ');
+                        descr + titles.responsible + ': ');
 
                     var $a = $('<a class="login">' + event.login + '</a>');
                     find.append($a);
@@ -119,7 +125,7 @@ var CalendarView = Backbone.View.extend({
 
         , tipLogins: function () {
             var self = this;
-            $(".qtip").remove();
+            this.$qtip.remove();
             $(function () {
                     $("a.login").each(function () {
                         var login = this.text;
